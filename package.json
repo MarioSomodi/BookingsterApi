@@ -1,0 +1,29 @@
+{
+  "name": "bookingsterapi",
+  "version": "0.0.1",
+  "description": "REST API for mobile app Bookingster.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_PATH=src/ nodemon --exec babel-node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarioSomodi/BookingsterApi.git"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "Bookingster",
+    "Reservations"
+  ],
+  "author": "Mario Šomođi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarioSomodi/BookingsterApi/issues"
+  },
+  "homepage": "https://github.com/MarioSomodi/BookingsterApi#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "firebase": "^9.7.0"
+  }
+}

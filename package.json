@@ -1,10 +1,12 @@
 {
   "name": "bookingsterapi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "REST API for mobile app Bookingster.",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_PATH=src/ nodemon --exec babel-node index.js"
+    "dev": "npx webpack -w",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "repository": {
     "type": "git",
@@ -23,7 +25,19 @@
   },
   "homepage": "https://github.com/MarioSomodi/BookingsterApi#readme",
   "dependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.17.10",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-inline-dotenv": "^1.7.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
     "express": "^4.18.1",
-    "firebase": "^9.7.0"
+    "firebase-admin": "^10.2.0",
+    "nodemon-webpack-plugin": "^4.7.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-node-externals": "^3.0.0"
   }
 }

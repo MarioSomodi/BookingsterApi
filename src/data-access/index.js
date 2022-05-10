@@ -1,8 +1,13 @@
-import makeConfigurationDb from "./configuration/configurationDb";
-import getDb from "./database";
+import makeConfigurationDb from './configuration/configurationDb';
+import makeCRUDDb from './CRUD/CRUDDB';
+import { getDb } from './database';
 
 const db = getDb();
 
-const configurationCollection = db.collection("configuration");
+const configurationCollection = db.collection('configuration');
+const userCollection = db.collection('users');
+
 const configurationDb = makeConfigurationDb({ configurationCollection });
-export { configurationDb };
+const CRUDDb = makeCRUDDb();
+
+export { configurationDb, userCollection, CRUDDb };

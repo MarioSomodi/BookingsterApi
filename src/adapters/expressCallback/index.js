@@ -8,19 +8,17 @@ export default function makeExpressCallback(controller) {
       method: req.method,
       path: req.path,
       headers: {
-        "Content-Type": req.get("Content-Type"),
-        Referer: req.get("referer"),
-        "User-Agent": req.get("User-Agent"),
+        'Content-Type': req.get('Content-Type'),
+        Referer: req.get('referer'),
+        'User-Agent': req.get('User-Agent'),
       },
     };
-    // console.log(httpRequest);
     controller(httpRequest)
       .then((httpResponse) => {
         if (httpResponse.headers) {
           res.set(httpResponse.headers);
         }
-        res.type("json");
-        // console.log(httpResponse);
+        res.type('json');
         res.status(httpResponse.statusCode).send(httpResponse.body);
       })
       .catch((e) =>

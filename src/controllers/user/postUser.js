@@ -1,14 +1,15 @@
-export default function makeGetConfiguration({ exportConfiguration }) {
-  return async function getConfiguration() {
+export default function makePostUser({ createUser }) {
+  return async function postUser(httpRequest) {
     const headers = {
       'Content-Type': 'application/json',
     };
     try {
-      const configuration = await exportConfiguration();
+      const userInfo = httpRequest.body;
+      const user = await createUser({ userInfo });
       return {
         headers,
-        statusCode: 200,
-        body: configuration.getWebClientId(),
+        statusCode: 201,
+        body: { user },
       };
     } catch (e) {
       //TODO error logging

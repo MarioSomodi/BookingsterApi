@@ -1,5 +1,5 @@
 import express from 'express';
-import { getConfiguration, notFound } from './controllers';
+import { getConfiguration, notFound, postUser } from './controllers';
 import makeExpressCallback from './adapters/expressCallback';
 
 const router = express.Router({
@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
   res.send('Welcome to the REST API of bookingster app.');
 });
 router.get('/configuration', makeExpressCallback(getConfiguration));
+router.post('/user', makeExpressCallback(postUser));
 
 const app = express();
 app.use(express.json());

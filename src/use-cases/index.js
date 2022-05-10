@@ -1,5 +1,11 @@
-import makeExportConfiguration from "./configuration/exportConfiguration";
-import { configurationDb } from "../data-access";
-const exportConfiguration = makeExportConfiguration({ configurationDb });
+import makeExportConfiguration from './configuration/exportConfiguration';
+import makeCreateUser from './user/createUser';
+import { configurationDb, userCollection, CRUDDb } from '../data-access';
 
-export { exportConfiguration };
+const exportConfiguration = makeExportConfiguration({ configurationDb });
+const createUser = makeCreateUser({
+  userCollection,
+  CRUDDb,
+});
+
+export { exportConfiguration, createUser };

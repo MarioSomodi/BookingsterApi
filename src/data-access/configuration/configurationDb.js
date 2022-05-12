@@ -5,7 +5,9 @@ export default function makeConfigurationDb({ configurationCollection }) {
       .limit(1)
       .get();
     if (queryResult.empty) {
-      return null;
+      throw new Error(
+        `Konfiguracijski objekt sa definiranim tipom <${type}> ne postoji`
+      );
     }
     var result = null;
     queryResult.forEach((doc) => {

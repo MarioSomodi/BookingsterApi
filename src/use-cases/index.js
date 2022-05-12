@@ -1,11 +1,18 @@
 import makeExportConfiguration from './configuration/exportConfiguration';
 import makeCreateUser from './user/createUser';
-import { configurationDb, userCollection, CRUDDb } from '../data-access';
+import {
+  configurationDb,
+  usersCollection,
+  CRUDDb,
+  usersDb,
+} from '../data-access';
+import makeAppointAdminClaim from './user/appointAdminClaim';
 
 const exportConfiguration = makeExportConfiguration({ configurationDb });
 const createUser = makeCreateUser({
-  userCollection,
+  usersCollection,
   CRUDDb,
 });
+const appointAdminClaim = makeAppointAdminClaim({ usersDb });
 
-export { exportConfiguration, createUser };
+export { exportConfiguration, createUser, appointAdminClaim };

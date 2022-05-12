@@ -1,13 +1,15 @@
 import makeConfigurationDb from './configuration/configurationDb';
 import makeCRUDDb from './CRUD/CRUDDB';
-import { getDb } from './database';
+import { getDb, getAuthentication } from './database';
+import makeUsersDb from './users/usersDb';
 
 const db = getDb();
 
 const configurationCollection = db.collection('configuration');
-const userCollection = db.collection('users');
+const usersCollection = db.collection('users');
 
 const configurationDb = makeConfigurationDb({ configurationCollection });
 const CRUDDb = makeCRUDDb();
+const usersDb = makeUsersDb({ usersCollection, getAuthentication });
 
-export { configurationDb, userCollection, CRUDDb };
+export { configurationDb, usersCollection, CRUDDb, usersDb };

@@ -1,7 +1,6 @@
 import makeConfigurationDb from './configuration/configurationDb';
 import makeCRUDDb from './CRUD/CRUDDB';
-import { getDb, getAuthentication } from './database';
-import makeUsersDb from './users/usersDb';
+import { getDb } from './database';
 
 const db = getDb();
 
@@ -10,6 +9,5 @@ const usersCollection = db.collection('users');
 
 const configurationDb = makeConfigurationDb({ configurationCollection });
 const CRUDDb = makeCRUDDb();
-const usersDb = makeUsersDb({ usersCollection, getAuthentication });
 
-export { configurationDb, usersCollection, CRUDDb, usersDb };
+export { configurationDb, usersCollection, CRUDDb };

@@ -1,5 +1,10 @@
 import express from 'express';
-import { getConfiguration, notFound, postUser } from './controllers';
+import {
+  getConfiguration,
+  notFound,
+  postUser,
+  getEstablishments,
+} from './controllers';
 import makeExpressCallback from './adapters/expressCallback';
 import { getAuthentication } from './data-access/database';
 import dotenv from 'dotenv';
@@ -32,9 +37,13 @@ const authorizeRequest = (req, res, next) => {
         next();
       })
       .catch((error) => {
-        res
-          .status(401)
-          .send({ errorMessage: 'Autorizacijski token je neispravan' });
+        console.log('helou');
+        if (process.env.ADMIN_TOKEN == token) next();
+        else {
+          res
+            .status(401)
+            .send({ errorMessage: 'Autorizacijski token je neispravan' });
+        }
       });
   }
 };
@@ -45,6 +54,7 @@ const userRouter = express.Router({
 userRouter.get('/', (req, res) => {
   res.send('Welcome to the REST API of bookingster app.');
 });
+userRouter.get('/establishments', makeExpressCallback(getEstablishments));
 
 const adminRouter = express.Router({
   strict: true,

@@ -30,7 +30,11 @@
         },
         {
             "name": "Users",
-            "description": "Add new users to firestore, edit existing etc"
+            "description": "Add new users to firestore, edit, read existing etc"
+        },
+        {
+            "name": "Establishments",
+            "description": "Add new establishments to firestore, edit, read existing etc"
         }
     ],
     "schemes": ["https","http"],
@@ -75,15 +79,78 @@
             }
             }
         }
+        },
+        "/api/establishments": {
+        "get": {
+            "tags": ["Establishment"],
+            "summary": "Get all establishments",
+            "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                "$ref": "#/definitions/EstablishmentsList"
+                }
+            }
+            }
+        }
         }
     },
     "definitions": {
         "Configuration": {
-            "required": ["googleClientID"],
             "properties": {
                 "googleClientId": {
                     "type": "string"
                 }
+            }
+        },
+        "EstablishmentsList": {
+            "properties": {
+                "establishments": 
+                {
+                    "type": "array",
+                    "items":{
+                        "type": "object",
+                        "properties": {
+                            "location": {
+                                "type": "object",
+                                "properties": {
+                                    "address" : {
+                                        "type" : "string"
+                                    },"city" : {
+                                        "type" : "string"
+                                    },"country" : {
+                                        "type" : "string"
+                                    },"geoCords" : {
+                                        "type" : "string"
+                                    }
+                                }
+                            },
+                            "name" : {
+                                "type" : "string"
+                            },
+                            "numberOfReservations" : {
+                                "type" : "integer"
+                            },
+                            "oib" : {
+                                "type" : "integer"
+                            },
+                            "workingHours" : {
+                                "type" : "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "day" : {
+                                            "type" : "string"
+                                        },"hours" : {
+                                            "type" : "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
             }
         },
         "UserInfo": {

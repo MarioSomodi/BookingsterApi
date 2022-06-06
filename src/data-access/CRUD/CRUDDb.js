@@ -5,7 +5,16 @@ export default function makeCRUDDb() {
     const doc = await dataRef.get();
     return doc.data();
   }
+  async function getAllFromCollection({ collection } = {}) {
+    const snapshot = await collection.get();
+    const docList = [];
+    snapshot.forEach((doc) => {
+      if (doc.id != 'root') docList.push(doc.data());
+    });
+    return docList;
+  }
   return Object.freeze({
     insertIntoCollectionById,
+    getAllFromCollection,
   });
 }

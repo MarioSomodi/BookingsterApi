@@ -30,7 +30,8 @@ export default function buildMakeUser() {
       getName: () => name,
       getUID: () => UID,
       getLastname: () => lastname,
-      getFullName: () => `${name} ${lastname}`,
+      getAuthType: () => authType,
+      getFullName: () => (authType != 'google' ? `${name} ${lastname}` : name),
       getAccountType: () => accountType,
     });
   };

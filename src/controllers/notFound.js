@@ -3,7 +3,7 @@ export default async function notFound() {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: { error: 'Endpoint not found' },
+    body: { errorMessage: 'Endpoint not found' },
     statusCode: 404,
   };
 }

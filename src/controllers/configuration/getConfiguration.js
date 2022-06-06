@@ -8,7 +8,7 @@ export default function makeGetConfiguration({ exportConfiguration }) {
       return {
         headers,
         statusCode: 200,
-        body: configuration.getWebClientId(),
+        body: { googleClientId: configuration.getWebClientId() },
       };
     } catch (e) {
       //TODO error logging
@@ -17,7 +17,8 @@ export default function makeGetConfiguration({ exportConfiguration }) {
         headers,
         statusCode: 400,
         body: {
-          error: e.message,
+          errorMessage: e.message,
+          fullErrorTrace: e,
         },
       };
     }

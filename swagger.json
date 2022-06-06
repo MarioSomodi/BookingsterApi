@@ -1,0 +1,110 @@
+{
+    "swagger": "2.0",
+    
+    "info": {
+        "version": "1.0.0",
+        "title": "Bookingster REST API",
+        "description": "REST API for the bookingster app.",
+        "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "bookingsterapi.oa.r.appspot.com",
+    "basePath": "/bookingster",
+    "securityDefinitions": {
+        "BearerAuth": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header",
+        "description": "JWT Token for authorization"
+        }
+    },
+    "security": [ 
+        { "BearerAuth": [] }
+    ],
+    "tags": [
+        {
+            "name": "Admin",
+            "description": "Administrative side of the API"
+        },
+        {
+            "name": "Users",
+            "description": "Add new users to firestore, edit existing etc"
+        }
+    ],
+    "schemes": ["https","http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/admin/configuration": {
+        "get": {
+            "tags": ["Admin"],
+            "summary": "Get configuration such as api keys",
+            "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                "$ref": "#/definitions/Configuration"
+                }
+            }
+            }
+        }
+        },
+        "/admin/user": {
+        "post": {
+            "tags": ["Users"],
+            "summary": "Add and connect new users UID with firestore DB",
+            "parameters": [
+            {
+                "name": "userInfo",
+                "in": "body",
+                "description": "User that we want to add and connect. <br/> If authType is 'emailpassword' contains full name in the name field if authType is 'google' it contains first name in the name field and last name in the lastName field. <br/> Account Type can be 0 -> User and 1 -> Establishment Owner",
+                "schema": {
+                "$ref": "#/definitions/UserInfo"
+                }
+            }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                "$ref": "#/definitions/UserInfo"
+                }
+            }
+            }
+        }
+        }
+    },
+    "definitions": {
+        "Configuration": {
+            "required": ["googleClientID"],
+            "properties": {
+                "googleClientId": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserInfo": {
+            "required": ["name", "authType", "accountType", "UID"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "lastName" : {
+                    "type" : "string"
+                },
+                "authType" : {
+                    "type" : "string"
+                },
+                "accountType" : {
+                    "type" : "integer"
+                },
+                "UID" : {
+                    "type" : "string"
+                }
+            }
+        }
+    }
+}

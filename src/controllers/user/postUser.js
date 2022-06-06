@@ -18,7 +18,8 @@ export default function makePostUser({ createUser }) {
         headers,
         statusCode: 400,
         body: {
-          error: e.message,
+          errorMessage: e.message,
+          fullErrorTrace: e,
         },
       };
     }

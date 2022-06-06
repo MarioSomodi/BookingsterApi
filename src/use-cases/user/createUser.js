@@ -1,9 +1,9 @@
 import { makeUser } from '../../entities';
-export default function makeCreateUser({ userCollection, CRUDDb }) {
+export default function makeCreateUser({ usersCollection, CRUDDb }) {
   return async function createUser({ userInfo }) {
     const user = makeUser(userInfo);
     return await CRUDDb.insertIntoCollectionById({
-      collection: userCollection,
+      collection: usersCollection,
       data: {
         fullName: user.getFullName(),
         lastname: user.getLastname(),

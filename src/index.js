@@ -26,23 +26,19 @@ const authorizeRequest = (req, res, next) => {
   }
   if (req.originalUrl.includes('admin')) {
     if (process.env.ADMIN_TOKEN == token) next();
-    else
-      res.status(403).send({
-        errorMessage: 'Pristup administracijskom dijelu api-a nije dozvoljen',
-      });
+    res.status(403).send({
+      errorMessage: 'Pristup administracijskom dijelu api-a nije dozvoljen',
+    });
   } else {
     auth
       .verifyIdToken(token)
-      .then((claims) => {
-        next();
-      })
+      .then(() => next())
       .catch((error) => {
-        console.log('helou');
         if (process.env.ADMIN_TOKEN == token) next();
         else {
-          res
-            .status(401)
-            .send({ errorMessage: 'Autorizacijski token je neispravan' });
+          res.status(401).send({
+            errorMessage: 'Autorizacijski token je neispravan',
+          });
         }
       });
   }

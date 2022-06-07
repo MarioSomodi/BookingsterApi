@@ -1,3 +1,4 @@
+import logger from '../../logger';
 export default function makeGetEstablishment({ listEstablishment }) {
   return async function getEstablishment() {
     const headers = {
@@ -11,14 +12,13 @@ export default function makeGetEstablishment({ listEstablishment }) {
         body: { establishments: establishments },
       };
     } catch (e) {
-      //TODO error logging
-      console.log(e);
+      logger({ errorMessage: e.message, fullErrorTrace: e.stack });
       return {
         headers,
         statusCode: 400,
         body: {
           errorMessage: e.message,
-          fullErrorTrace: e,
+          fullErrorTrace: e.stack,
         },
       };
     }

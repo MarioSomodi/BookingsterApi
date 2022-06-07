@@ -5,6 +5,12 @@ export default function makeCRUDDb() {
     const doc = await dataRef.get();
     return doc.data();
   }
+  async function insertIntoCollectionByAutoId({ collection, data } = {}) {
+    const dataRef = collection.doc();
+    await dataRef.set(data);
+    const doc = await dataRef.get();
+    return doc.data();
+  }
   async function getAllFromCollection({ collection } = {}) {
     const snapshot = await collection.get();
     const docList = [];
@@ -16,5 +22,6 @@ export default function makeCRUDDb() {
   return Object.freeze({
     insertIntoCollectionById,
     getAllFromCollection,
+    insertIntoCollectionByAutoId,
   });
 }

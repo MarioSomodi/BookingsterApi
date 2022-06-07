@@ -6,7 +6,6 @@ export default function buildMakeEstablishment() {
     oib,
     workingHours,
   }) {
-    console.log(location);
     var { address, city, country, geoCords } = location;
     if (!address || address.trim().length < 1) {
       throw new Error('Adresa objekta mora biti poslana.');

@@ -1,3 +1,4 @@
+import logger from '../../logger';
 export default function makeExpressCallback(controller) {
   return (req, res) => {
     const httpRequest = {
@@ -21,8 +22,11 @@ export default function makeExpressCallback(controller) {
         res.type('json');
         res.status(httpResponse.statusCode).send(httpResponse.body);
       })
-      .catch((e) =>
-        res.status(500).send({ errorMessage: e.message, fullErrorTrace: e })
-      );
+      .catch((e) => {
+        logger({ errorMessage: e.message, fullErrorTrace: e.stack });
+        res
+          .status(500)
+          .send({ errorMessage: e.message, fullErrorTrace: e.stack });
+      });
   };
 }

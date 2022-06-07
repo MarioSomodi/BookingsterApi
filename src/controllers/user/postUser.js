@@ -1,3 +1,4 @@
+import logger from '../../logger';
 export default function makePostUser({ createUser }) {
   return async function postUser(httpRequest) {
     const headers = {
@@ -12,14 +13,13 @@ export default function makePostUser({ createUser }) {
         body: { user },
       };
     } catch (e) {
-      //TODO error logging
-      console.log(e);
+      logger({ errorMessage: e.message, fullErrorTrace: e.stack });
       return {
         headers,
         statusCode: 400,
         body: {
           errorMessage: e.message,
-          fullErrorTrace: e,
+          fullErrorTrace: e.stack,
         },
       };
     }

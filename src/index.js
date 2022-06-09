@@ -4,6 +4,7 @@ import {
   notFound,
   postUser,
   getEstablishments,
+  postEstablishment,
 } from './controllers';
 import makeExpressCallback from './adapters/expressCallback';
 import { getAuthentication } from './data-access/database';
@@ -33,7 +34,7 @@ const authorizeRequest = (req, res, next) => {
     auth
       .verifyIdToken(token)
       .then(() => next())
-      .catch((error) => {
+      .catch(() => {
         if (process.env.ADMIN_TOKEN == token) next();
         else {
           res.status(401).send({
@@ -51,6 +52,7 @@ userRouter.get('/', (req, res) => {
   res.send('Welcome to the REST API of bookingster app.');
 });
 userRouter.get('/establishments', makeExpressCallback(getEstablishments));
+userRouter.post('/establishments', makeExpressCallback(postEstablishment));
 
 const adminRouter = express.Router({
   strict: true,

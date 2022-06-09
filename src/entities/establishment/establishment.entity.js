@@ -4,6 +4,8 @@ export default function buildMakeEstablishment() {
     name,
     numberOfReservations,
     oib,
+    images,
+    phoneNumber,
     workingHours,
   }) {
     var { address, city, country, geoCords } = location;
@@ -27,7 +29,9 @@ export default function buildMakeEstablishment() {
     }
     return Object.freeze({
       getName: () => name,
+      getImages: () => images,
       getOIB: () => oib,
+      getPhoneNumber: () => phoneNumber,
       getLocation: () => location,
       getWorkingHours: () => workingHours,
       getNumberOfReservations: () => numberOfReservations,

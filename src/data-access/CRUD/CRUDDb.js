@@ -1,6 +1,6 @@
 export default function makeCRUDDb() {
   async function insertIntoCollectionById({ collection, data, id } = {}) {
-    const dataRef = collection.doc(id);
+    const dataRef = collection.doc(String(id));
     await dataRef.set(data);
     const doc = await dataRef.get();
     return doc.data();

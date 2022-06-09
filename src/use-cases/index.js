@@ -1,6 +1,7 @@
 import makeExportConfiguration from './configuration/exportConfiguration';
 import makeCreateUser from './user/createUser';
 import makeListEstablishments from './establishment/listEstablishment';
+import makeCreateEstablishment from './establishment/createEstablishment';
 import {
   configurationDb,
   usersCollection,
@@ -18,4 +19,14 @@ const listEstablishment = makeListEstablishments({
   CRUDDb,
 });
 
-export { exportConfiguration, createUser, listEstablishment };
+const createEstablishment = makeCreateEstablishment({
+  establishmentsCollection,
+  CRUDDb,
+});
+
+export {
+  exportConfiguration,
+  createUser,
+  listEstablishment,
+  createEstablishment,
+};

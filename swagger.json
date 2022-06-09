@@ -11,6 +11,7 @@
         }
     },
     "host": "bookingsterapi.oa.r.appspot.com",
+    "host1": "localhost:8080",
     "basePath": "/bookingster",
     "securityDefinitions": {
         "BearerAuth": {
@@ -37,7 +38,7 @@
             "description": "Add new establishments to firestore, edit, read existing etc"
         }
     ],
-    "schemes": ["https","http"],
+    "schemes": ["http"],
     "consumes": ["application/json"],
     "produces": ["application/json"],
     "paths": {
@@ -82,13 +83,36 @@
         },
         "/api/establishments": {
         "get": {
-            "tags": ["Establishment"],
+            "tags": ["Establishments"],
             "summary": "Get all establishments",
             "responses": {
             "200": {
                 "description": "OK",
                 "schema": {
                 "$ref": "#/definitions/EstablishmentsList"
+                }
+            }
+            }
+        },
+        "post": {
+            "tags": ["Establishments"],
+            "summary": "Add new establishment",
+            "parameters": [
+            {
+                "name": "establishmentInfo",
+                "in": "body",
+                "description": "Adding a new establishment",
+                "schema": {
+                "$ref": "#/definitions/Establishment"
+                }
+            }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+            "201": {
+                "description": "Created",
+                "schema": {
+                "$ref": "#/definitions/Establishment"
                 }
             }
             }
@@ -100,6 +124,77 @@
             "properties": {
                 "googleClientId": {
                     "type": "string"
+                }
+            }
+        },
+        "Establishment": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "object",
+                    "properties": {
+                        "address" : {
+                            "type" : "string"
+                        },"city" : {
+                            "type" : "string"
+                        },"country" : {
+                            "type" : "string"
+                        },"geoCords" : {
+                            "type" : "object",
+                            "properties": {
+                                "latitude" : {
+                                    "type" : "number",
+                                    "format" : "double"
+                                },
+                                "longitude" : {
+                                    "type" : "number",
+                                    "format" : "double"
+                                }
+                            }
+                        }
+                    }
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name" : {
+                                "type" : "string"
+                            },
+                            "isMain" : {
+                                "type" : "boolean"
+                            },
+                            "priority" : {
+                                "type" : "integer"
+                            }
+                        }
+                    }
+                },
+                "name" : {
+                    "type" : "string"
+                },
+                 "phoneNumber" : {
+                    "type" : "string"
+                },
+                "numberOfReservations" : {
+                    "type" : "integer"
+                },
+                "oib" : {
+                    "type" : "integer"
+                },
+                "workingHours" : {
+                    "type" : "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "day" : {
+                                "type" : "string"
+                            },"hours" : {
+                                "type" : "string"
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -125,7 +220,27 @@
                                     }
                                 }
                             },
+                            "images": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name" : {
+                                            "type" : "string"
+                                        },
+                                        "isMain" : {
+                                            "type" : "boolean"
+                                        },
+                                        "priority" : {
+                                            "type" : "integer"
+                                        }
+                                    }
+                                }
+                            },
                             "name" : {
+                                "type" : "string"
+                            },
+                            "phoneNumber" : {
                                 "type" : "string"
                             },
                             "numberOfReservations" : {

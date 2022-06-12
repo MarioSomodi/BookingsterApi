@@ -1,12 +1,12 @@
 import { makeEstablishment } from '../../entities';
+
 export default function makeCreateEstablishment({
   establishmentsCollection,
   CRUDDb,
 }) {
   return async function createEstablishment({ establishmentInfo }) {
     const establishment = makeEstablishment(establishmentInfo);
-    console.log(establishment);
-    return await CRUDDb.insertIntoCollectionById({
+    const insertedEstablishment = await CRUDDb.insertIntoCollectionById({
       collection: establishmentsCollection,
       data: {
         phoneNumber: establishment.getPhoneNumber(),
@@ -19,5 +19,6 @@ export default function makeCreateEstablishment({
       },
       id: establishment.getOIB(),
     });
+    return insertedEstablishment;
   };
 }

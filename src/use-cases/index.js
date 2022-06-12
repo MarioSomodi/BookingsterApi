@@ -10,10 +10,12 @@ import {
 } from '../data-access';
 
 const exportConfiguration = makeExportConfiguration({ configurationDb });
+
 const createUser = makeCreateUser({
   usersCollection,
   CRUDDb,
 });
+
 const listEstablishment = makeListEstablishments({
   establishmentsCollection,
   CRUDDb,

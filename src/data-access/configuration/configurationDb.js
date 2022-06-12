@@ -1,5 +1,6 @@
 export default function makeConfigurationDb({ configurationCollection }) {
   async function findByType({ type } = {}) {
+    let result = null;
     const queryResult = await configurationCollection
       .where('type', '==', type)
       .limit(1)
@@ -9,7 +10,6 @@ export default function makeConfigurationDb({ configurationCollection }) {
         `Konfiguracijski objekt sa definiranim tipom <${type}> ne postoji`
       );
     }
-    var result = null;
     queryResult.forEach((doc) => {
       result = doc.data();
     });

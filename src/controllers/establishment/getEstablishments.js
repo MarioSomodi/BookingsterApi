@@ -1,4 +1,5 @@
 import logger from '../../logger';
+
 export default function makeGetEstablishment({ listEstablishment }) {
   return async function getEstablishment() {
     const headers = {

@@ -1,4 +1,5 @@
 import logger from '../../logger';
+
 export default function makeGetConfiguration({ exportConfiguration }) {
   return async function getConfiguration() {
     const headers = {

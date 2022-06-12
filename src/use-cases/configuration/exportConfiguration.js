@@ -1,4 +1,5 @@
 import { makeConfiguration } from '../../entities';
+
 export default function makeExportConfiguration({ configurationDb }) {
   return async function exportConfiguration() {
     const webClientId = await configurationDb.findByType({

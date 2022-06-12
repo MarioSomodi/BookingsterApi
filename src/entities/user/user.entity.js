@@ -12,26 +12,34 @@ export default function buildMakeUser() {
     if (!authType || authType.trim().length < 1) {
       throw new Error('Tip autentifikacije mora biti poslan.');
     }
-    if (!accountType || accountType.trim().length < 1) {
-      throw new Error('Tip računa mora biti poslan.');
+    if (accountType < 0 || accountType > 1) {
+      throw new Error(
+        'Tip računa mora biti poslan, može biti Korisnik(0) ili Ugostitelj(1).'
+      );
     }
     if (!name || name.trim().length < 1) {
       throw new Error('Ime mora biti poslano.');
     }
-    if ((!lastname || lastname.trim().length < 1) && authType != 'google') {
+    if ((!lastname || lastname.trim().length < 1) && authType !== 'google') {
       throw new Error('Prezime mora biti poslano.');
     }
-    if (authType == 'google') {
-      let splitName = name.split(' ');
-      name = splitName[0];
-      lastname = splitName = splitName[1];
+    if (authType === 'google') {
+      const splitName = name.split(' ');
+      if (splitName.length !== 2) {
+        throw new Error(
+          'Google korisnik mora imati ime i prezime u name varijabli.'
+        );
+      }
+      const { 0: fN, 1: lN } = splitName;
+      name = fN;
+      lastname = lN;
     }
     return Object.freeze({
       getName: () => name,
       getUID: () => UID,
       getLastname: () => lastname,
       getAuthType: () => authType,
-      getFullName: () => (authType != 'google' ? `${name} ${lastname}` : name),
+      getFullName: () => `${name} ${lastname}`,
       getAccountType: () => accountType,
     });
   };

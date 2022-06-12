@@ -1,4 +1,5 @@
 import logger from '../../logger';
+
 export default function makePostEstablishment({ createEstablishment }) {
   return async function postEstablishment(httpRequest) {
     const headers = {

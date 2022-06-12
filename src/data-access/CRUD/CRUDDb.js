@@ -15,7 +15,7 @@ export default function makeCRUDDb() {
     const snapshot = await collection.get();
     const docList = [];
     snapshot.forEach((doc) => {
-      if (doc.id != 'root') docList.push(doc.data());
+      if (doc.id !== 'root') docList.push(doc.data());
     });
     return docList;
   }

@@ -1,4 +1,5 @@
 import logger from '../../logger';
+
 export default function makeExpressCallback(controller) {
   return (req, res) => {
     const httpRequest = {

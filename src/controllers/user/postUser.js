@@ -1,4 +1,5 @@
 import logger from '../../logger';
+
 export default function makePostUser({ createUser }) {
   return async function postUser(httpRequest) {
     const headers = {

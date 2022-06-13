@@ -5,9 +5,14 @@ export default function buildMakeUser() {
     authType,
     accountType,
     UID,
+    photoURL,
+    email,
   } = {}) {
     if (!UID || UID.trim().length < 1) {
       throw new Error('Korisnikov identifikacijski broj mora biti poslan.');
+    }
+    if (!email || email.trim().length < 1) {
+      throw new Error('Email mora biti poslan.');
     }
     if (!authType || authType.trim().length < 1) {
       throw new Error('Tip autentifikacije mora biti poslan.');
@@ -41,6 +46,8 @@ export default function buildMakeUser() {
       getAuthType: () => authType,
       getFullName: () => `${name} ${lastname}`,
       getAccountType: () => accountType,
+      getPhotoURL: () => photoURL,
+      getEmail: () => email,
     });
   };
 }

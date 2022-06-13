@@ -7,6 +7,7 @@ import {
   usersCollection,
   CRUDDb,
   establishmentsCollection,
+  authActions,
 } from '../data-access';
 
 const exportConfiguration = makeExportConfiguration({ configurationDb });
@@ -14,6 +15,7 @@ const exportConfiguration = makeExportConfiguration({ configurationDb });
 const createUser = makeCreateUser({
   usersCollection,
   CRUDDb,
+  authActions,
 });
 
 const listEstablishment = makeListEstablishments({

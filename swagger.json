@@ -1,261 +1,294 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "Bookingster REST API",
-        "description": "REST API for the bookingster app.",
-        "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Bookingster REST API",
+    "description": "REST API for the bookingster app.",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "bookingsterapi.oa.r.appspot.com",
+  "host1": "localhost:8080",
+  "basePath": "/bookingster",
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header",
+      "description": "JWT Token for authorization"
+    }
+  },
+  "security": [{ "BearerAuth": [] }],
+  "tags": [
+    {
+      "name": "Admin",
+      "description": "Administrative side of the API"
     },
-    "host": "bookingsterapi.oa.r.appspot.com",
-    "host1": "localhost:8080",
-    "basePath": "/bookingster",
-    "securityDefinitions": {
-        "BearerAuth": {
-        "type": "apiKey",
-        "name": "authorization",
-        "in": "header",
-        "description": "JWT Token for authorization"
-        }
+    {
+      "name": "Users",
+      "description": "Add new users to firestore, edit, read existing etc"
     },
-    "security": [ 
-        { "BearerAuth": [] }
-    ],
-    "tags": [
-        {
-            "name": "Admin",
-            "description": "Administrative side of the API"
-        },
-        {
-            "name": "Users",
-            "description": "Add new users to firestore, edit, read existing etc"
-        },
-        {
-            "name": "Establishments",
-            "description": "Add new establishments to firestore, edit, read existing etc"
+    {
+      "name": "Establishments",
+      "description": "Add new establishments to firestore, edit, read existing etc"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/admin/configuration": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get configuration such as api keys",
+        "responses": {
+          "200": {
+            "description": "Returns the configuration object containing api keys, etc",
+            "schema": {
+              "$ref": "#/definitions/Configuration"
+            }
+          }
         }
-    ],
-    "schemes": ["http"],
-    "consumes": ["application/json"],
-    "produces": ["application/json"],
-    "paths": {
-        "/admin/configuration": {
-        "get": {
-            "tags": ["Admin"],
-            "summary": "Get configuration such as api keys",
-            "responses": {
-            "200": {
-                "description": "Returns the configuration object contaning api keys, etc",
-                "schema": {
-                "$ref": "#/definitions/Configuration"
-                }
-            }
-            }
-        }
-        },
-        "/admin/user": {
-        "post": {
-            "tags": ["Users"],
-            "summary": "Add and connect new users UID with firestore DB",
-            "parameters": [
-            {
-                "name": "userInfo",
-                "in": "body",
-                "description": "User that we want to add and connect. <br/> If authType is 'emailpassword' contains full name in the name field if authType is 'google' it contains first name in the name field and last name in the lastName field. <br/> Account Type can be 0 -> User and 1 -> Establishment Owner",
-                "schema": {
-                "$ref": "#/definitions/UserInfo"
-                }
-            }
-            ],
-            "produces": ["application/json"],
-            "responses": {
-                "200": {
-                    "description": "Returns the user that was added and connected to firestore",
-                    "schema": {
-                        "$ref": "#/definitions/UserInfo"
-                    }
-                },
-                "default": {
-                    "description": "Unexpected error has happened",
-                    "schema": {
-                        "$ref": "#/definitions/Error"
-                    }
-                }
-            }
-        }
-        },
-        "/api/establishments": {
-        "get": {
-            "tags": ["Establishments"],
-            "summary": "Get all establishments",
-            "responses": {
-                "200": {
-                    "description": "A array containing all establishments",
-                    "schema": {
-                        "$ref": "#/definitions/EstablishmentsList"
-                    }
-                },
-                "default": {
-                    "description": "Unexpected error has happened",
-                    "schema": {
-                        "$ref": "#/definitions/Error"
-                    }
-                }
-            }
-        },
-        "post": {
-            "tags": ["Establishments"],
-            "summary": "Add new establishment",
-            "parameters": [
-            {
-                "name": "establishmentInfo",
-                "in": "body",
-                "description": "Adding a new establishment",
-                "schema": {
-                "$ref": "#/definitions/Establishment"
-                }
-            }
-            ],
-            "produces": ["application/json"],
-            "responses": {
-                "201": {
-                    "description": "Returns the newly created establishment",
-                    "schema": {
-                        "$ref": "#/definitions/Establishment"
-                    }
-                },
-                "default": {
-                    "description": "Unexpected error has happened",
-                    "schema": {
-                        "$ref": "#/definitions/Error"
-                    }
-                }
-            }
-        }
-        }
+      }
     },
-    "definitions": {
-        "Configuration": {
-            "properties": {
-                "googleClientId": {
-                    "type": "string"
-                }
+    "/admin/user": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Add and connect new users UID with firestore DB",
+        "parameters": [
+          {
+            "name": "userInfo",
+            "in": "body",
+            "description": "User that we want to add and connect. <br/> If authType is 'emailpassword' contains full name in the name field if authType is 'google' it contains first name in the name field and last name in the lastName field. <br/> Account Type can be 0 -> User and 1 -> Establishment Owner",
+            "schema": {
+              "$ref": "#/definitions/UserInfoPOST"
             }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns the user that was added and connected to firestore",
+            "schema": {
+              "$ref": "#/definitions/UserInfoGET"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/establishments": {
+      "get": {
+        "tags": ["Establishments"],
+        "summary": "Get all establishments",
+        "responses": {
+          "200": {
+            "description": "A array containing all establishments",
+            "schema": {
+              "$ref": "#/definitions/EstablishmentsList"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Establishments"],
+        "summary": "Add new establishment",
+        "parameters": [
+          {
+            "name": "establishmentInfo",
+            "in": "body",
+            "description": "Adding a new establishment",
+            "schema": {
+              "$ref": "#/definitions/Establishment"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "Returns the newly created establishment",
+            "schema": {
+              "$ref": "#/definitions/Establishment"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Configuration": {
+      "properties": {
+        "googleClientId": {
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "properties": {
+        "errorMessage": {
+          "type": "string"
         },
-        "Error": {
-            "properties": {
-                "errorMessage": {
-                    "type": "string"
+        "fullErrorTrace": {
+          "type": "string"
+        }
+      }
+    },
+    "Establishment": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "geoCords": {
+              "type": "object",
+              "properties": {
+                "latitude": {
+                  "type": "number",
+                  "format": "double"
                 },
-                "fullErrorTrace": {
-                    "type": "string"
+                "longitude": {
+                  "type": "number",
+                  "format": "double"
                 }
+              }
             }
+          }
         },
-        "Establishment": {
+        "images": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
-                "location": {
-                    "type": "object",
-                    "properties": {
-                        "address" : {
-                            "type" : "string"
-                        },"city" : {
-                            "type" : "string"
-                        },"country" : {
-                            "type" : "string"
-                        },"geoCords" : {
-                            "type" : "object",
-                            "properties": {
-                                "latitude" : {
-                                    "type" : "number",
-                                    "format" : "double"
-                                },
-                                "longitude" : {
-                                    "type" : "number",
-                                    "format" : "double"
-                                }
-                            }
-                        }
-                    }
-                },
-                "images": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name" : {
-                                "type" : "string"
-                            },
-                            "isMain" : {
-                                "type" : "boolean"
-                            },
-                            "priority" : {
-                                "type" : "integer"
-                            }
-                        }
-                    }
-                },
-                "name" : {
-                    "type" : "string"
-                },
-                 "phoneNumber" : {
-                    "type" : "string"
-                },
-                "numberOfReservations" : {
-                    "type" : "integer"
-                },
-                "oib" : {
-                    "type" : "integer"
-                },
-                "workingHours" : {
-                    "type" : "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "day" : {
-                                "type" : "string"
-                            },"hours" : {
-                                "type" : "string"
-                            }
-                        }
-                    }
-                }
+              "name": {
+                "type": "string"
+              },
+              "isMain": {
+                "type": "boolean"
+              },
+              "priority": {
+                "type": "number"
+              }
             }
+          }
         },
-        "EstablishmentsList": {
-            "properties": {
-                "establishments": 
-                {
-                    "type": "array",
-                    "items":{
-                        "$ref": "#/definitions/Establishment"
-                    }
-                }
-                
-            }
+        "name": {
+          "type": "string"
         },
-        "UserInfo": {
-            "required": ["name", "authType", "accountType", "UID"],
+        "phoneNumber": {
+          "type": "string"
+        },
+        "numberOfReservations": {
+          "type": "number"
+        },
+        "oib": {
+          "type": "number"
+        },
+        "workingHours": {
+          "type": "array",
+          "items": {
+            "type": "object",
             "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "lastname" : {
-                    "type" : "string"
-                },
-                "authType" : {
-                    "type" : "string"
-                },
-                "accountType" : {
-                    "type" : "integer"
-                },
-                "UID" : {
-                    "type" : "string"
-                }
+              "day": {
+                "type": "string"
+              },
+              "hours": {
+                "type": "string"
+              }
             }
+          }
         }
+      }
+    },
+    "EstablishmentsList": {
+      "properties": {
+        "establishments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Establishment"
+          }
+        }
+      }
+    },
+    "UserInfoPOST": {
+      "required": ["name", "authType", "accountType", "UID"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "photoURL": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "authType": {
+          "type": "string"
+        },
+        "accountType": {
+          "type": "integer"
+        },
+        "UID": {
+          "type": "string"
+        }
+      }
+    },
+    "UserInfoGET": {
+      "required": [
+        "name",
+        "accountType",
+        "UID",
+        "photoURL",
+        "lastname",
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "photoURL": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "accountType": {
+          "type": "number"
+        },
+        "UID": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
     }
+  }
 }

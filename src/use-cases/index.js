@@ -9,6 +9,7 @@ import {
   establishmentsCollection,
   authActions,
 } from '../data-access';
+import makeFetchUserInfo from './user/fetchUserInfo';
 
 const exportConfiguration = makeExportConfiguration({ configurationDb });
 
@@ -16,6 +17,11 @@ const createUser = makeCreateUser({
   usersCollection,
   CRUDDb,
   authActions,
+});
+
+const fetchUserInfo = makeFetchUserInfo({
+  usersCollection,
+  CRUDDb,
 });
 
 const listEstablishment = makeListEstablishments({
@@ -30,6 +36,7 @@ const createEstablishment = makeCreateEstablishment({
 
 export {
   exportConfiguration,
+  fetchUserInfo,
   createUser,
   listEstablishment,
   createEstablishment,

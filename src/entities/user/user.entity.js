@@ -48,6 +48,7 @@ export default function buildMakeUser() {
       getAccountType: () => accountType,
       getPhotoURL: () => photoURL,
       getEmail: () => email,
+      getIsNewUser: () => true,
     });
   };
 }

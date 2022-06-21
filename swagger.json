@@ -82,6 +82,34 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user from firestore",
+        "parameters": [
+          {
+            "name": "UID",
+            "in": "query",
+            "description": "UID of the user that we want to get",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns the user that was added and connected to firestore",
+            "schema": {
+              "$ref": "#/definitions/UserInfoGET"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
     "/api/establishments": {

@@ -7,6 +7,7 @@ import {
   postUser,
   getEstablishments,
   postEstablishment,
+  getUser,
 } from './controllers';
 import makeExpressCallback from './adapters/expressCallback';
 import { getAuthentication } from './data-access/database';
@@ -60,6 +61,7 @@ const adminRouter = express.Router({
 });
 adminRouter.get('/configuration', makeExpressCallback(getConfiguration));
 adminRouter.post('/user', makeExpressCallback(postUser));
+adminRouter.get('/user', makeExpressCallback(getUser));
 
 const app = express();
 app.use(express.json());

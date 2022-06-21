@@ -1,7 +1,7 @@
 import logger from '../../logger';
 
-export default function makeGetEstablishment({ listEstablishment }) {
-  return async function getEstablishment() {
+export default function makeGetEstablishments({ listEstablishment }) {
+  return async function getEstablishments() {
     const headers = {
       'Content-Type': 'application/json',
     };

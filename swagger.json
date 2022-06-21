@@ -112,7 +112,7 @@
         }
       }
     },
-    "/api/establishments": {
+    "/api/establishment": {
       "get": {
         "tags": ["Establishments"],
         "summary": "Get all establishments",

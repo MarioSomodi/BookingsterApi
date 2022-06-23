@@ -149,7 +149,7 @@
           "201": {
             "description": "Returns the newly created establishment",
             "schema": {
-              "$ref": "#/definitions/EstablishmentPOST"
+              "$ref": "#/definitions/EstablishmentGET"
             }
           },
           "default": {

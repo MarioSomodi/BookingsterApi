@@ -6,6 +6,23 @@ export default function makeCreateEstablishment({
   storageActions,
 }) {
   return async function createEstablishment({ establishmentInfo }) {
+    if (
+      await CRUDDb.checkIfDocWithIdExistsInCollection({
+        collection: establishmentsCollection,
+        id: establishmentInfo.oib,
+      })
+    ) {
+      throw Error('Objekt sa tim OIB-om vec postoji.');
+    }
+    if (
+      await CRUDDb.checkIfDocumentWithPropertyValueExistsInCollection({
+        collection: establishmentsCollection,
+        propertyName: 'name',
+        propertyValue: establishmentInfo.name,
+      })
+    ) {
+      throw Error('Objekt sa tim imenom vec postoji.');
+    }
     const establishment = makeEstablishment(establishmentInfo, 'post');
     establishment.getImagesToUpload().forEach((image) => {
       storageActions.uploadBase64(

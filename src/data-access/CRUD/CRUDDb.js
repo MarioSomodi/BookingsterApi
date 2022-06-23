@@ -1,6 +1,7 @@
 export default function makeCRUDDb() {
   async function insertIntoCollectionById({ collection, data, id } = {}) {
-    const dataRef = collection.doc(String(id));
+    if (typeof id !== 'string') id = String(id);
+    const dataRef = collection.doc(id);
     await dataRef.set(data);
     const doc = await dataRef.get();
     return doc.data();
@@ -20,14 +21,41 @@ export default function makeCRUDDb() {
     return docList;
   }
   async function getDocumentFromCollectionById({ collection, id } = {}) {
+    if (typeof id !== 'string') id = String(id);
     const documentRef = collection.doc(id);
     const doc = await documentRef.get();
     if (!doc.exists) {
-      throw Error('Korisnik sa poslanom identifikacijskom oznakom ne postoji.');
+      throw Error('Dokument sa poslanim identifikatorom ne postoji.');
     }
     return doc.data();
   }
+  async function checkIfDocWithIdExistsInCollection({ collection, id } = {}) {
+    if (typeof id !== 'string') id = String(id);
+    const documentRef = collection.doc(id);
+    const doc = await documentRef.get();
+    if (doc.exists) {
+      return true;
+    }
+    return false;
+  }
+  async function checkIfDocumentWithPropertyValueExistsInCollection({
+    collection,
+    propertyName,
+    propertyValue,
+  } = {}) {
+    const queryResult = await collection
+      .where(propertyName, '==', propertyValue)
+      .limit(1)
+      .get();
+    if (queryResult.empty) {
+      return false;
+    }
+    return true;
+  }
+
   return Object.freeze({
+    checkIfDocumentWithPropertyValueExistsInCollection,
+    checkIfDocWithIdExistsInCollection,
     getDocumentFromCollectionById,
     insertIntoCollectionById,
     getAllFromCollection,

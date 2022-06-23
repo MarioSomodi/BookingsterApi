@@ -6,6 +6,14 @@ export default function makeCreateUser({
   authenticationActions,
 }) {
   return async function createUser({ userInfo }) {
+    if (
+      await CRUDDb.checkIfDocWithIdExistsInCollection({
+        collection: usersCollection,
+        id: userInfo.UID,
+      })
+    ) {
+      throw Error('Korisnik sa tim identifikacijskim brojem vec postoji.');
+    }
     const email = await authenticationActions.getUsersEmail({
       UID: userInfo.UID,
     });

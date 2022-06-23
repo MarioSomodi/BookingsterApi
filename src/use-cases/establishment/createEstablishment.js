@@ -3,9 +3,16 @@ import { makeEstablishment } from '../../entities';
 export default function makeCreateEstablishment({
   establishmentsCollection,
   CRUDDb,
+  storageActions,
 }) {
   return async function createEstablishment({ establishmentInfo }) {
-    const establishment = makeEstablishment(establishmentInfo);
+    const establishment = makeEstablishment(establishmentInfo, 'post');
+    establishment.getImagesToUpload().forEach((image) => {
+      storageActions.uploadBase64(
+        `${establishment.getOIB()}/${image.name}`,
+        image.base64
+      );
+    });
     const insertedEstablishment = await CRUDDb.insertIntoCollectionById({
       collection: establishmentsCollection,
       data: {

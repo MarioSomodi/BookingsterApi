@@ -1,7 +1,8 @@
 import makeConfigurationDb from './configuration/configurationDb';
 import makeCRUDDb from './CRUD/CRUDDb';
-import { getDb, getAuthentication } from './database';
-import makeAuthActions from './users/authActions';
+import { getDb, getAuthentication, bucket } from './database';
+import makeAuthenticationActions from './authentication/authenticationActions';
+import makeStorageActions from './storage/storageActions';
 
 const db = getDb();
 
@@ -12,11 +13,15 @@ const logsCollection = db.collection('logs');
 
 const configurationDb = makeConfigurationDb({ configurationCollection });
 const CRUDDb = makeCRUDDb();
-const authActions = makeAuthActions({ auth: getAuthentication() });
+const authenticationActions = makeAuthenticationActions({
+  auth: getAuthentication(),
+});
+const storageActions = makeStorageActions({ bucket });
 
 export {
+  storageActions,
   configurationDb,
-  authActions,
+  authenticationActions,
   usersCollection,
   CRUDDb,
   establishmentsCollection,

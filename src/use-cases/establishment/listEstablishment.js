@@ -10,7 +10,7 @@ export default function makeListEstablishment({
     });
     const listEstablishments = [];
     establishments.forEach((establishment) => {
-      const est = makeEstablishment(establishment);
+      const est = makeEstablishment(establishment, 'get');
       listEstablishments.push({
         name: est.getName(),
         phoneNumber: est.getPhoneNumber(),

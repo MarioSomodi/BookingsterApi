@@ -3,10 +3,12 @@ import { makeUser } from '../../entities';
 export default function makeCreateUser({
   usersCollection,
   CRUDDb,
-  authActions,
+  authenticationActions,
 }) {
   return async function createUser({ userInfo }) {
-    const email = await authActions.getUsersEmail({ UID: userInfo.UID });
+    const email = await authenticationActions.getUsersEmail({
+      UID: userInfo.UID,
+    });
     userInfo.email = email;
     const user = makeUser(userInfo);
     const data = {

@@ -140,7 +140,7 @@
             "in": "body",
             "description": "Adding a new establishment",
             "schema": {
-              "$ref": "#/definitions/Establishment"
+              "$ref": "#/definitions/EstablishmentPOST"
             }
           }
         ],
@@ -149,7 +149,7 @@
           "201": {
             "description": "Returns the newly created establishment",
             "schema": {
-              "$ref": "#/definitions/Establishment"
+              "$ref": "#/definitions/EstablishmentPOST"
             }
           },
           "default": {
@@ -163,6 +163,16 @@
     }
   },
   "definitions": {
+    "EstablishmentsList": {
+      "properties": {
+        "establishments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EstablishmentGET"
+          }
+        }
+      }
+    },
     "Configuration": {
       "properties": {
         "googleClientId": {
@@ -180,51 +190,16 @@
         }
       }
     },
-    "Establishment": {
+    "EstablishmentPOST": {
       "type": "object",
       "properties": {
         "location": {
-          "type": "object",
-          "properties": {
-            "address": {
-              "type": "string"
-            },
-            "city": {
-              "type": "string"
-            },
-            "country": {
-              "type": "string"
-            },
-            "geoCords": {
-              "type": "object",
-              "properties": {
-                "latitude": {
-                  "type": "number",
-                  "format": "double"
-                },
-                "longitude": {
-                  "type": "number",
-                  "format": "double"
-                }
-              }
-            }
-          }
+          "$ref": "#/definitions/location"
         },
         "images": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "isMain": {
-                "type": "boolean"
-              },
-              "priority": {
-                "type": "number"
-              }
-            }
+            "$ref": "#/definitions/imagesPOST"
           }
         },
         "name": {
@@ -242,31 +217,112 @@
         "workingHours": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "day": {
-                "type": "string"
-              },
-              "hours": {
-                "type": "string"
-              }
+            "$ref": "#/definitions/workHour"
+          }
+        }
+      }
+    },
+    "EstablishmentGET": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "$ref": "#/definitions/location"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/imagesGET"
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "numberOfReservations": {
+          "type": "number"
+        },
+        "oib": {
+          "type": "number"
+        },
+        "workingHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/workHour"
+          }
+        }
+      }
+    },
+    "workHour": {
+      "properties": {
+        "day": {
+          "type": "string"
+        },
+        "timeFrom": {
+          "type": "string"
+        },
+        "timeTo": {
+          "type": "string"
+        }
+      }
+    },
+    "location": {
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "geoCords": {
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "format": "double"
+            },
+            "longitude": {
+              "type": "number",
+              "format": "double"
             }
           }
         }
       }
     },
-    "EstablishmentsList": {
+    "imagesPOST": {
       "properties": {
-        "establishments": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Establishment"
-          }
+        "name": {
+          "type": "string"
+        },
+        "isMain": {
+          "type": "boolean"
+        },
+        "priority": {
+          "type": "number"
+        },
+        "base64": {
+          "type": "string"
+        }
+      }
+    },
+    "imagesGET": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "isMain": {
+          "type": "boolean"
+        },
+        "priority": {
+          "type": "number"
         }
       }
     },
     "UserInfoPOST": {
-      "required": ["name", "authType", "accountType", "UID"],
       "properties": {
         "name": {
           "type": "string"
@@ -289,14 +345,6 @@
       }
     },
     "UserInfoGET": {
-      "required": [
-        "name",
-        "accountType",
-        "UID",
-        "photoURL",
-        "lastname",
-        "email"
-      ],
       "properties": {
         "name": {
           "type": "string"

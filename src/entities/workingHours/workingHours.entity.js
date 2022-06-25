@@ -27,7 +27,7 @@ export default function buildMakeWorkingHours() {
           const timeFrom = new Date(workHours.getTimeFrom());
           const timeTo = new Date(workHours.getTimeTo());
           return {
-            day: workHours.day,
+            day: workHours.getDay(),
             timeFrom: formatTime(timeFrom),
             timeTo: formatTime(timeTo),
           };

@@ -190,6 +190,32 @@
         }
       }
     },
+    "TablePOST": {
+      "properties": {
+        "capacity": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "TableGET": {
+      "properties": {
+        "capacity": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "reservedBy": {
+          "type": "string"
+        }
+      }
+    },
     "EstablishmentPOST": {
       "type": "object",
       "properties": {
@@ -218,6 +244,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/workHour"
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TablePOST"
           }
         }
       }
@@ -250,6 +282,12 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/workHour"
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TableGET"
           }
         }
       }

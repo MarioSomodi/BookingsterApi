@@ -5,6 +5,7 @@ export default function buildMakeEstablishment({
   makeImages,
   makeWorkingHours,
   makeLocation,
+  makeTables,
 }) {
   return function makeEstablishment(
     {
@@ -15,13 +16,15 @@ export default function buildMakeEstablishment({
       images,
       phoneNumber,
       workingHours,
+      tables,
     },
     action
   ) {
     const validatedImages = action === 'post' ? makeImages(images) : null;
     const validatedWorkingHours =
       action === 'post' ? makeWorkingHours(workingHours) : null;
-
+    const validatedTables =
+      action === 'post' ? makeTables(action, tables) : null;
     location = makeLocation(location);
 
     if (!name || name.trim().length < 1) {
@@ -33,6 +36,7 @@ export default function buildMakeEstablishment({
     if (!phoneNumber || !checkIfValidPhoneNumber(phoneNumber)) {
       throw new Error('Broj objekta mora biti poslan i pravilan.');
     }
+
     return Object.freeze({
       getName: () => name,
       // eslint-disable-next-line arrow-body-style
@@ -53,6 +57,10 @@ export default function buildMakeEstablishment({
         return action === 'post'
           ? validatedWorkingHours.getWorkingHours()
           : workingHours;
+      },
+      // eslint-disable-next-line arrow-body-style
+      getTables: () => {
+        return action === 'post' ? validatedTables.getTables() : tables;
       },
       getNumberOfReservations: () => numberOfReservations,
     });

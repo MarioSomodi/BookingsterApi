@@ -2,6 +2,7 @@ import { makeEstablishment } from '../../entities';
 
 export default function makeCreateEstablishment({
   establishmentsCollection,
+  establishmentsTablesCollection,
   CRUDDb,
   storageActions,
 }) {
@@ -30,6 +31,13 @@ export default function makeCreateEstablishment({
         image.base64
       );
     });
+    const insertedTables = await CRUDDb.insertIntoCollectionById({
+      collection: establishmentsTablesCollection,
+      data: {
+        tables: establishment.getTables(),
+      },
+      id: establishment.getOIB(),
+    });
     const insertedEstablishment = await CRUDDb.insertIntoCollectionById({
       collection: establishmentsCollection,
       data: {
@@ -43,6 +51,7 @@ export default function makeCreateEstablishment({
       },
       id: establishment.getOIB(),
     });
+    insertedEstablishment.tables = insertedTables.tables;
     return insertedEstablishment;
   };
 }

@@ -7,6 +7,7 @@ import {
   usersCollection,
   CRUDDb,
   establishmentsCollection,
+  establishmentsTablesCollection,
   authenticationActions,
   storageActions,
 } from '../data-access';
@@ -28,10 +29,12 @@ const fetchUserInfo = makeFetchUserInfo({
 const listEstablishment = makeListEstablishments({
   establishmentsCollection,
   CRUDDb,
+  establishmentsTablesCollection,
 });
 
 const createEstablishment = makeCreateEstablishment({
   establishmentsCollection,
+  establishmentsTablesCollection,
   CRUDDb,
   storageActions,
 });

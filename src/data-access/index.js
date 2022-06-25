@@ -10,6 +10,7 @@ const configurationCollection = db.collection('configuration');
 const usersCollection = db.collection('users');
 const establishmentsCollection = db.collection('establishments');
 const logsCollection = db.collection('logs');
+const establishmentsTablesCollection = db.collection('establishmentsTables');
 
 const configurationDb = makeConfigurationDb({ configurationCollection });
 const CRUDDb = makeCRUDDb();
@@ -20,6 +21,7 @@ const storageActions = makeStorageActions({ bucket });
 
 export {
   storageActions,
+  establishmentsTablesCollection,
   configurationDb,
   authenticationActions,
   usersCollection,

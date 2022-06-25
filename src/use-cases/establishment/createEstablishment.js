@@ -24,7 +24,7 @@ export default function makeCreateEstablishment({
       throw Error('Objekt sa tim imenom vec postoji.');
     }
     const establishment = makeEstablishment(establishmentInfo, 'post');
-    establishment.getImagesToUpload().forEach((image) => {
+    establishment.getImagesForUpload().forEach((image) => {
       storageActions.uploadBase64(
         `${establishment.getOIB()}/${image.name}`,
         image.base64

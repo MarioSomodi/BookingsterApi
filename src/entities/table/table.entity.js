@@ -2,9 +2,13 @@ import { uid } from 'uid';
 
 export default function buildMakeTable() {
   return function makeTable(
-    { capacity, description, id, reservedBy = null },
-    action
+    action,
+    nChairs = null,
+    { capacity, description = null, id, reservedBy = null } = {}
   ) {
+    if (action === 'post') {
+      capacity = nChairs;
+    }
     if (capacity <= 0) {
       throw Error('Stol mora imati mjesta za minimalno jednu osobu.');
     }

@@ -1,15 +1,17 @@
 import buildMakeConfiguration from './configuration/configuration.entity';
 import buildMakeUser from './user/user.entity';
 import buildMakeEstablishment from './establishment/establishment.entity';
-import buildMakeImages from './images/images.entity';
+import buildMakeImages from './image/images.entity';
 import buildMakeWorkingHours from './workingHours/workingHours.entity';
 import buildMakeLocation from './location/location.entity';
 import buildMakeTable from './table/table.entity';
 import buildMakeTables from './table/tables.entity';
+import buildMakeImage from './image/image.entity';
 
 const makeConfiguration = buildMakeConfiguration();
 const makeUser = buildMakeUser();
-const makeImages = buildMakeImages();
+const makeImage = buildMakeImage();
+const makeImages = buildMakeImages({ makeImage });
 const makeTable = buildMakeTable();
 const makeTables = buildMakeTables({ makeTable });
 const makeWorkingHours = buildMakeWorkingHours();

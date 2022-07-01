@@ -192,10 +192,10 @@
     },
     "TablePOST": {
       "properties": {
-        "capacity": {
+        "nChairs": {
           "type": "number"
         },
-        "description": {
+        "nTables": {
           "type": "string"
         }
       }
@@ -350,6 +350,9 @@
     "imagesGET": {
       "properties": {
         "name": {
+          "type": "string"
+        },
+        "imageUrl": {
           "type": "string"
         },
         "isMain": {

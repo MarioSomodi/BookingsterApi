@@ -3,7 +3,17 @@ export default function buildMakeTables({ makeTable }) {
     if (!tables || tables.length < 1) {
       throw new Error('Objekt mora imati minimalno jedan stol.');
     }
-    tables = tables.map((table) => makeTable(table, action));
+    if (action === 'post') {
+      const requestedTables = [];
+      tables.forEach((tableRequest) => {
+        for (let i = 0; i < tableRequest.nTables; i += 1) {
+          requestedTables.push(makeTable(action, tableRequest.nChairs));
+        }
+      });
+      tables = requestedTables;
+    } else {
+      tables = tables.map((table) => makeTable(table, action));
+    }
     return Object.freeze({
       getTables: () =>
         tables.map((table) => ({

@@ -1,5 +1,10 @@
 export default function buildMakeLocation() {
-  return function makeLocation({ address, city, country, geoCords } = {}) {
+  return function makeLocation({
+    address,
+    city,
+    country,
+    geoCords = null,
+  } = {}) {
     if (!address || address.trim().length < 1) {
       throw new Error('Adresa objekta mora biti poslana.');
     }

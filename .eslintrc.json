@@ -18,6 +18,7 @@
         "endOfLine": "crlf"
       }
     ],
+    "function-paren-newline": "off",
     "no-unused-vars": "warn",
     "no-console": "warn",
     "func-names": "off",

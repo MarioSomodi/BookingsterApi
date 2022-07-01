@@ -25,12 +25,6 @@ export default function makeCreateEstablishment({
       throw Error('Objekt sa tim imenom vec postoji.');
     }
     const establishment = makeEstablishment(establishmentInfo, 'post');
-    establishment.getImagesForUpload().forEach((image) => {
-      storageActions.uploadBase64(
-        `${establishment.getOIB()}/${image.name}`,
-        image.base64
-      );
-    });
     const insertedTables = await CRUDDb.insertIntoCollectionById({
       collection: establishmentsTablesCollection,
       data: {
@@ -38,11 +32,25 @@ export default function makeCreateEstablishment({
       },
       id: establishment.getOIB(),
     });
+    const imageUrls = await Promise.all(
+      establishment.getImagesForUpload().map(async (image) => {
+        const uploadedImageUrl = await storageActions.uploadBase64(
+          `${establishment.getOIB()}/${image.name}`,
+          image.base64
+        );
+        return { imageUrl: uploadedImageUrl, name: image.name };
+      })
+    );
     const insertedEstablishment = await CRUDDb.insertIntoCollectionById({
       collection: establishmentsCollection,
       data: {
         phoneNumber: establishment.getPhoneNumber(),
-        images: establishment.getImages(),
+        images: establishment.getImages().map((image) => ({
+          ...image,
+          imageUrl: imageUrls.filter(
+            (imageUrl) => image.name === imageUrl.name
+          )[0].imageUrl,
+        })),
         location: establishment.getLocation(),
         name: establishment.getName(),
         numberOfReservations: establishment.getNumberOfReservations(),
@@ -51,6 +59,7 @@ export default function makeCreateEstablishment({
       },
       id: establishment.getOIB(),
     });
+
     insertedEstablishment.tables = insertedTables.tables;
     return insertedEstablishment;
   };

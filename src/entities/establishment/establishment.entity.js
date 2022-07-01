@@ -11,7 +11,7 @@ export default function buildMakeEstablishment({
     {
       location,
       name,
-      numberOfReservations,
+      numberOfReservations = 0,
       oib,
       images,
       phoneNumber,
@@ -36,7 +36,6 @@ export default function buildMakeEstablishment({
     if (!phoneNumber || !checkIfValidPhoneNumber(phoneNumber)) {
       throw new Error('Broj objekta mora biti poslan i pravilan.');
     }
-
     return Object.freeze({
       getName: () => name,
       // eslint-disable-next-line arrow-body-style

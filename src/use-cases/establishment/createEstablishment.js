@@ -5,8 +5,19 @@ export default function makeCreateEstablishment({
   establishmentsTablesCollection,
   CRUDDb,
   storageActions,
+  usersCollection,
 }) {
   return async function createEstablishment({ establishmentInfo }) {
+    if (
+      !(await CRUDDb.checkIfDocWithIdExistsInCollection({
+        collection: usersCollection,
+        id: establishmentInfo.owner,
+      }))
+    ) {
+      throw Error(
+        'Osoba koju ste specificirali kao vlasnik objekta ne postoji.'
+      );
+    }
     if (
       await CRUDDb.checkIfDocWithIdExistsInCollection({
         collection: establishmentsCollection,
@@ -44,6 +55,7 @@ export default function makeCreateEstablishment({
     const insertedEstablishment = await CRUDDb.insertIntoCollectionById({
       collection: establishmentsCollection,
       data: {
+        owner: establishment.getOwner(),
         phoneNumber: establishment.getPhoneNumber(),
         images: establishment.getImages().map((image) => ({
           ...image,

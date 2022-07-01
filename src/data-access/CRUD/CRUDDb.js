@@ -29,6 +29,22 @@ export default function makeCRUDDb() {
     }
     return doc.data();
   }
+
+  async function getDocumentsFromCollectionByPropertyValue({
+    collection,
+    propertyName,
+    propertyValue,
+  } = {}) {
+    const results = [];
+    const queryResult = await collection
+      .where(propertyName, '==', propertyValue)
+      .get();
+    queryResult.forEach((doc) => {
+      results.push(doc.data());
+    });
+    return results;
+  }
+
   async function checkIfDocWithIdExistsInCollection({ collection, id } = {}) {
     if (typeof id !== 'string') id = String(id);
     const documentRef = collection.doc(id);
@@ -59,6 +75,7 @@ export default function makeCRUDDb() {
     getDocumentFromCollectionById,
     insertIntoCollectionById,
     getAllFromCollection,
+    getDocumentsFromCollectionByPropertyValue,
     insertIntoCollectionByAutoId,
   });
 }

@@ -160,6 +160,36 @@
           }
         }
       }
+    },
+    "/api/establishment/owner": {
+      "get": {
+        "tags": ["Establishments"],
+        "summary": "Get establishments by their owner.",
+        "parameters": [
+          {
+            "name": "UID",
+            "in": "query",
+            "description": "UID of the owner whose establishments we wanna get",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns a list of establishment that belong to the sent owner",
+            "schema": {
+              "$ref": "#/definitions/EstablishmentsList"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -196,7 +226,7 @@
           "type": "number"
         },
         "nTables": {
-          "type": "string"
+          "type": "number"
         }
       }
     },
@@ -219,6 +249,9 @@
     "EstablishmentPOST": {
       "type": "object",
       "properties": {
+        "owner": {
+          "type": "string"
+        },
         "location": {
           "$ref": "#/definitions/location"
         },
@@ -243,7 +276,7 @@
         "workingHours": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/workHour"
+            "$ref": "#/definitions/workHourPOST"
           }
         },
         "tables": {
@@ -257,6 +290,9 @@
     "EstablishmentGET": {
       "type": "object",
       "properties": {
+        "owner": {
+          "type": "string"
+        },
         "location": {
           "$ref": "#/definitions/location"
         },
@@ -281,7 +317,7 @@
         "workingHours": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/workHour"
+            "$ref": "#/definitions/workHourGET"
           }
         },
         "tables": {
@@ -292,7 +328,7 @@
         }
       }
     },
-    "workHour": {
+    "workHourGET": {
       "properties": {
         "day": {
           "type": "string"
@@ -302,6 +338,35 @@
         },
         "timeTo": {
           "type": "string"
+        }
+      }
+    },
+    "workHourPOST": {
+      "properties": {
+        "day": {
+          "type": "string"
+        },
+        "timeFrom": {
+          "type": "object",
+          "properties": {
+            "hours": {
+              "type": "number"
+            },
+            "minutes": {
+              "type": "number"
+            }
+          }
+        },
+        "timeTo": {
+          "type": "object",
+          "properties": {
+            "hours": {
+              "type": "number"
+            },
+            "minutes": {
+              "type": "number"
+            }
+          }
         }
       }
     },

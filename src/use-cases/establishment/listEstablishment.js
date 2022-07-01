@@ -18,6 +18,7 @@ export default function makeListEstablishment({
         establishment.tables = establishmentsTables.tables;
         const est = makeEstablishment(establishment, 'get');
         listEstablishments.push({
+          owner: est.getOwner(),
           name: est.getName(),
           phoneNumber: est.getPhoneNumber(),
           location: est.getLocation(),

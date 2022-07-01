@@ -2,6 +2,7 @@ import makeExportConfiguration from './configuration/exportConfiguration';
 import makeCreateUser from './user/createUser';
 import makeListEstablishments from './establishment/listEstablishment';
 import makeCreateEstablishment from './establishment/createEstablishment';
+import makeFetchOwnersEstablishments from './establishment/fetchOwnersEstablishments';
 import {
   configurationDb,
   usersCollection,
@@ -32,17 +33,24 @@ const listEstablishment = makeListEstablishments({
   establishmentsTablesCollection,
 });
 
+const fetchOwnersEstablishments = makeFetchOwnersEstablishments({
+  establishmentsCollection,
+  CRUDDb,
+});
+
 const createEstablishment = makeCreateEstablishment({
   establishmentsCollection,
   establishmentsTablesCollection,
   CRUDDb,
   storageActions,
+  usersCollection,
 });
 
 export {
   exportConfiguration,
   fetchUserInfo,
   createUser,
+  fetchOwnersEstablishments,
   listEstablishment,
   createEstablishment,
 };

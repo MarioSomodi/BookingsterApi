@@ -1,4 +1,3 @@
-import { checkIfDateStringIsValid } from '../../utils/validationExpressions';
 import formatTime from '../../utils/formatTime';
 
 export default function buildMakeWorkingHours() {
@@ -8,13 +7,23 @@ export default function buildMakeWorkingHours() {
     }
     workingHours = workingHours.map(({ day, timeFrom, timeTo }) => {
       if (
-        !checkIfDateStringIsValid(timeFrom) ||
-        !checkIfDateStringIsValid(timeTo)
+        !timeFrom ||
+        !timeTo ||
+        typeof timeFrom.hours !== 'number' ||
+        typeof timeTo.hours !== 'number' ||
+        typeof timeFrom.minutes !== 'number' ||
+        typeof timeTo.minutes !== 'number' ||
+        timeFrom.hours < 0 ||
+        timeTo.hours < 0 ||
+        timeFrom.minutes < 0 ||
+        timeTo.minutes < 0
       ) {
-        throw Error(
-          'Jedno ili vise od poslanih radnih vremena objekta su nepravilni.'
-        );
+        throw Error('Jedno ili vise od poslanih radnih vremena su nepravilna.');
       }
+      timeFrom = new Date(
+        Date.UTC(0, 0, 0, timeFrom.hours, timeFrom.minutes, 0)
+      );
+      timeTo = new Date(Date.UTC(0, 0, 0, timeTo.hours, timeTo.minutes, 0));
       return Object.freeze({
         getDay: () => day,
         getTimeFrom: () => timeFrom,
@@ -23,15 +32,11 @@ export default function buildMakeWorkingHours() {
     });
     return Object.freeze({
       getWorkingHours: () =>
-        workingHours.map((workHours) => {
-          const timeFrom = new Date(workHours.getTimeFrom());
-          const timeTo = new Date(workHours.getTimeTo());
-          return {
-            day: workHours.getDay(),
-            timeFrom: formatTime(timeFrom),
-            timeTo: formatTime(timeTo),
-          };
-        }),
+        workingHours.map((workHours) => ({
+          day: workHours.getDay(),
+          timeFrom: formatTime(workHours.getTimeFrom()),
+          timeTo: formatTime(workHours.getTimeTo()),
+        })),
     });
   };
 }

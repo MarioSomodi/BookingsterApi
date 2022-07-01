@@ -17,6 +17,7 @@ export default function buildMakeEstablishment({
       phoneNumber,
       workingHours,
       tables,
+      owner,
     },
     action
   ) {
@@ -26,7 +27,9 @@ export default function buildMakeEstablishment({
     const validatedTables =
       action === 'post' ? makeTables(action, tables) : null;
     location = makeLocation(location);
-
+    if (!owner || owner.trim().length < 1) {
+      throw new Error('Vlasnik objekta mora biti poslan.');
+    }
     if (!name || name.trim().length < 1) {
       throw new Error('Ime objekta mora biti poslano.');
     }
@@ -42,6 +45,7 @@ export default function buildMakeEstablishment({
       getImages: () => {
         return action === 'post' ? validatedImages.getImages() : images;
       },
+      getOwner: () => owner,
       getImagesForUpload: () => validatedImages.getImagesForUpload(),
       getOIB: () => oib,
       getPhoneNumber: () => phoneNumber,

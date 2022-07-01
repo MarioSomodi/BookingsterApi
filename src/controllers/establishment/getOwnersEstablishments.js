@@ -1,17 +1,19 @@
 import logger from '../../logger';
 
-export default function makeGetUser({ fetchUserInfo }) {
-  return async function getUser(httpRequest) {
+export default function makeGetOwnersEstablishments({
+  fetchOwnersEstablishments,
+}) {
+  return async function getOwnersEstablishments(httpRequest) {
     const headers = {
       'Content-Type': 'application/json',
     };
     try {
       const { UID } = httpRequest.query;
-      const user = await fetchUserInfo({ UID });
+      const establishments = await fetchOwnersEstablishments({ UID });
       return {
         headers,
-        statusCode: 201,
-        body: { user },
+        statusCode: 200,
+        body: { establishments: establishments },
       };
     } catch (e) {
       logger({ errorMessage: e.message, fullErrorTrace: e.stack });

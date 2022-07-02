@@ -1,22 +1,15 @@
 import formatTime from '../../utils/formatTime';
+import { checkIfValidDateSent } from '../../utils/validationExpressions';
 
 export default function buildMakeWorkingHours() {
   return function makeWorkingHours(workingHours = []) {
     if (!workingHours || workingHours.length < 1) {
       throw new Error('Radno vrijeme objekta mora biti poslano.');
     }
-    workingHours = workingHours.map(({ day, timeFrom, timeTo }) => {
+    workingHours = workingHours.map(({ day, timeFrom, timeTo, index }) => {
       if (
-        !timeFrom ||
-        !timeTo ||
-        typeof timeFrom.hours !== 'number' ||
-        typeof timeTo.hours !== 'number' ||
-        typeof timeFrom.minutes !== 'number' ||
-        typeof timeTo.minutes !== 'number' ||
-        timeFrom.hours < 0 ||
-        timeTo.hours < 0 ||
-        timeFrom.minutes < 0 ||
-        timeTo.minutes < 0
+        !checkIfValidDateSent(timeFrom, true) &&
+        !checkIfValidDateSent(timeTo, true)
       ) {
         throw Error('Jedno ili vise od poslanih radnih vremena su nepravilna.');
       }
@@ -26,17 +19,21 @@ export default function buildMakeWorkingHours() {
       timeTo = new Date(Date.UTC(0, 0, 0, timeTo.hours, timeTo.minutes, 0));
       return Object.freeze({
         getDay: () => day,
+        getIndex: () => index,
         getTimeFrom: () => timeFrom,
         getTimeTo: () => timeTo,
       });
     });
     return Object.freeze({
       getWorkingHours: () =>
-        workingHours.map((workHours) => ({
-          day: workHours.getDay(),
-          timeFrom: formatTime(workHours.getTimeFrom()),
-          timeTo: formatTime(workHours.getTimeTo()),
-        })),
+        workingHours
+          .map((workHours) => ({
+            index: workHours.getIndex(),
+            day: workHours.getDay(),
+            timeFrom: formatTime(workHours.getTimeFrom()),
+            timeTo: formatTime(workHours.getTimeTo()),
+          }))
+          .sort((a, b) => (a.index > b.index ? 1 : -1)),
     });
   };
 }

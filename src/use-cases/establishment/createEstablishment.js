@@ -35,7 +35,7 @@ export default function makeCreateEstablishment({
     ) {
       throw Error('Objekt sa tim imenom vec postoji.');
     }
-    const establishment = makeEstablishment(establishmentInfo, 'post');
+    const establishment = makeEstablishment(establishmentInfo, [], 'post');
     const insertedTables = await CRUDDb.insertIntoCollectionById({
       collection: establishmentsTablesCollection,
       data: {

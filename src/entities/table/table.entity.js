@@ -3,11 +3,12 @@ import { uid } from 'uid';
 export default function buildMakeTable() {
   return function makeTable(
     action,
+    userReservations,
     nChairs = null,
-    { capacity, description = null, id, reservedBy = null } = {}
+    { capacity, description = null, id } = {}
   ) {
     if (action === 'post') {
-      capacity = nChairs;
+      capacity = Number(nChairs);
     }
     if (capacity <= 0) {
       throw Error('Stol mora imati mjesta za minimalno jednu osobu.');
@@ -15,7 +16,10 @@ export default function buildMakeTable() {
     return Object.freeze({
       getCapacity: () => capacity,
       getDescription: () => description,
-      getReservedBy: () => reservedBy,
+      getReserved: () =>
+        userReservations.some(
+          (uR) => uR.tablesReserved.includes(id) && uR.status === 1
+        ),
       getId: () => (action === 'post' ? uid(20) : id),
     });
   };

@@ -3,6 +3,8 @@ import { makeEstablishment } from '../../entities';
 export default function makeFetchOwnersEstablishments({
   establishmentsCollection,
   CRUDDb,
+  usersReservationsCollection,
+  establishmentsTablesCollection,
 }) {
   return async function fetchOwnersEstablishments({ UID }) {
     if (
@@ -21,20 +23,32 @@ export default function makeFetchOwnersEstablishments({
         propertyValue: UID,
       }
     );
-    establishments = establishments.map((establishment) => {
-      const est = makeEstablishment(establishment, 'get');
-      return {
-        images: est.getImages(),
-        location: est.getLocation(),
-        name: est.getName(),
-        numberOfReservations: est.getNumberOfReservations(),
-        oib: est.getOIB(),
-        owner: est.getOwner(),
-        phoneNumber: est.getPhoneNumber(),
-        workingHours: est.getWorkingHours(),
-        tables: est.getTables(),
-      };
-    });
+    establishments = await Promise.all(
+      establishments.map(async (establishment) => {
+        const establishmentsTables = await CRUDDb.getDocumentFromCollectionById(
+          { collection: establishmentsTablesCollection, id: establishment.oib }
+        );
+        establishment.tables = establishmentsTables.tables;
+        const usersReservations =
+          await CRUDDb.getDocumentsFromCollectionByPropertyValue({
+            collection: usersReservationsCollection,
+            propertyName: 'establishmentOIB',
+            propertyValue: establishment.oib,
+          });
+        const est = makeEstablishment(establishment, usersReservations, 'get');
+        return {
+          images: est.getImages(),
+          location: est.getLocation(),
+          name: est.getName(),
+          numberOfReservations: est.getNumberOfReservations(),
+          oib: est.getOIB(),
+          owner: est.getOwner(),
+          phoneNumber: est.getPhoneNumber(),
+          workingHours: est.getWorkingHours(),
+          tables: est.getTables(),
+        };
+      })
+    );
     return establishments;
   };
 }

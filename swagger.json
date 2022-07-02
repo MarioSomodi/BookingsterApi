@@ -9,8 +9,8 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "bookingsterapi.oa.r.appspot.com",
-  "host1": "localhost:8080",
+  "host1": "bookingsterapi.oa.r.appspot.com",
+  "host": "localhost:8080",
   "basePath": "/bookingster",
   "securityDefinitions": {
     "BearerAuth": {
@@ -33,6 +33,10 @@
     {
       "name": "Establishments",
       "description": "Add new establishments to firestore, edit, read existing etc"
+    },
+    {
+      "name": "Reservation",
+      "description": "Add reservations to firestore, edit, read existing etc"
     }
   ],
   "schemes": ["http"],
@@ -190,15 +194,129 @@
           }
         }
       }
+    },
+    "/api/reservation": {
+      "post": {
+        "tags": ["Reservation"],
+        "summary": "Add new reservation",
+        "parameters": [
+          {
+            "name": "reservationInfo",
+            "in": "body",
+            "description": "Adding a new reservation",
+            "schema": {
+              "$ref": "#/definitions/ReservationPOST"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns the information about the added reservation",
+            "schema": {
+              "$ref": "#/definitions/ReservationGET"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "ReservationPOST": {
+      "properties": {
+        "establishmentOIB": {
+          "type": "number"
+        },
+        "establishmentOwner": {
+          "type": "string"
+        },
+        "reservedBy": {
+          "type": "string"
+        },
+        "nameOnReservation": {
+          "type": "string"
+        },
+        "reservedFrom": {
+          "type": "object",
+          "properties": {
+            "year": {
+              "type": "number"
+            },
+            "month": {
+              "type": "number"
+            },
+            "day": {
+              "type": "number"
+            },
+            "hours": {
+              "type": "number"
+            },
+            "minutes": {
+              "type": "number"
+            }
+          }
+        },
+        "places": {
+          "type": "number"
+        }
+      }
+    },
+    "ReservationGET": {
+      "properties": {
+        "establishmentOIB": {
+          "type": "number"
+        },
+        "tablesReserved": {
+          "type": "number"
+        },
+        "establishmentOwner": {
+          "type": "string"
+        },
+        "reservedBy": {
+          "type": "string"
+        },
+        "nameOnReservation": {
+          "type": "string"
+        },
+        "reservedFrom": {
+          "type": "string"
+        },
+        "reservedTo": {
+          "type": "string"
+        },
+        "places": {
+          "type": "number"
+        },
+        "reservedTables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TableGET"
+          }
+        }
+      }
+    },
     "EstablishmentsList": {
       "properties": {
         "establishments": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/EstablishmentGET"
+          }
+        }
+      }
+    },
+    "TablesList": {
+      "properties": {
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TableGET"
           }
         }
       }
@@ -333,6 +451,9 @@
         "day": {
           "type": "string"
         },
+        "index": {
+          "type": "number"
+        },
         "timeFrom": {
           "type": "string"
         },
@@ -343,6 +464,9 @@
     },
     "workHourPOST": {
       "properties": {
+        "index": {
+          "type": "number"
+        },
         "day": {
           "type": "string"
         },

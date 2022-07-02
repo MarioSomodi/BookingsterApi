@@ -19,13 +19,13 @@ export default function buildMakeEstablishment({
       tables,
       owner,
     },
+    usersReservations,
     action
   ) {
     const validatedImages = action === 'post' ? makeImages(images) : null;
     const validatedWorkingHours =
       action === 'post' ? makeWorkingHours(workingHours) : null;
-    const validatedTables =
-      action === 'post' ? makeTables(action, tables) : null;
+    tables = makeTables(action, tables, usersReservations);
     location = makeLocation(location);
     if (!owner || owner.trim().length < 1) {
       throw new Error('Vlasnik objekta mora biti poslan.');
@@ -59,12 +59,9 @@ export default function buildMakeEstablishment({
       getWorkingHours: () => {
         return action === 'post'
           ? validatedWorkingHours.getWorkingHours()
-          : workingHours;
+          : workingHours.sort((a, b) => (a.index > b.index ? 1 : -1));
       },
-      // eslint-disable-next-line arrow-body-style
-      getTables: () => {
-        return action === 'post' ? validatedTables.getTables() : tables;
-      },
+      getTables: () => tables.getTables(),
       getNumberOfReservations: () => numberOfReservations,
     });
   };

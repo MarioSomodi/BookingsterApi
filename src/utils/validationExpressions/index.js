@@ -16,12 +16,35 @@ const checkIfValidPhoneNumber = (phoneNumber) => {
   return false;
 };
 
-const checkIfDateStringIsValid = (dateString) => {
-  // eslint-disable-next-line no-restricted-globals
-  if (new Date(dateString) !== 'Invalid Date' && !isNaN(new Date(dateString))) {
+const checkIfValidDateSent = (date, onlyHourAndMinutes) => {
+  if (onlyHourAndMinutes) {
+    if (
+      !date ||
+      typeof date.hours !== 'number' ||
+      typeof date.minutes !== 'number' ||
+      date.hours < 0 ||
+      date.minutes < 0
+    ) {
+      return false;
+    }
     return true;
   }
-  return false;
+  if (
+    !date ||
+    typeof date.year !== 'number' ||
+    typeof date.month !== 'number' ||
+    typeof date.day !== 'number' ||
+    typeof date.hours !== 'number' ||
+    typeof date.minutes !== 'number' ||
+    date.year < 0 ||
+    date.month < 0 ||
+    date.day < 0 ||
+    date.hours < 0 ||
+    date.minutes < 0
+  ) {
+    return false;
+  }
+  return true;
 };
 
-export { checkIfBase64, checkIfValidPhoneNumber, checkIfDateStringIsValid };
+export { checkIfBase64, checkIfValidPhoneNumber, checkIfValidDateSent };

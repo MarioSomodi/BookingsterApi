@@ -8,6 +8,7 @@ import {
   userAdminRouter,
   establishmentRouter,
   configurationRouter,
+  reservationRouter,
 } from './routes';
 import authorizeRequest from './adapters/authorizeRequest';
 
@@ -18,6 +19,7 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 
 app.use('/bookingster/admin/user', authorizeRequest, userAdminRouter);
+
 app.use(
   '/bookingster/admin/configuration',
   authorizeRequest,
@@ -29,6 +31,9 @@ app.use(
   authorizeRequest,
   establishmentRouter
 );
+
+app.use('/bookingster/api/reservation', authorizeRequest, reservationRouter);
+
 app.use(
   '/bookingster/docs',
   swaggerUI.serve,

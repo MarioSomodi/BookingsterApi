@@ -7,6 +7,7 @@ import buildMakeLocation from './location/location.entity';
 import buildMakeTable from './table/table.entity';
 import buildMakeTables from './table/tables.entity';
 import buildMakeImage from './image/image.entity';
+import buildMakeReservation from './reservation/reservation.entity';
 
 const makeConfiguration = buildMakeConfiguration();
 const makeUser = buildMakeUser();
@@ -22,6 +23,7 @@ const makeEstablishment = buildMakeEstablishment({
   makeLocation,
   makeTables,
 });
+const makeReservation = buildMakeReservation();
 
 export {
   makeConfiguration,
@@ -29,4 +31,9 @@ export {
   makeEstablishment,
   makeImages,
   makeWorkingHours,
+  makeTable,
+  makeTables,
+  makeImage,
+  makeLocation,
+  makeReservation,
 };

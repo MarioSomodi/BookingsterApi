@@ -16,7 +16,7 @@ export default function makeListEstablishment({
           { collection: establishmentsTablesCollection, id: establishment.oib }
         );
         establishment.tables = establishmentsTables.tables;
-        const est = makeEstablishment(establishment, 'get');
+        const est = makeEstablishment(establishment, [], 'get');
         listEstablishments.push({
           owner: est.getOwner(),
           name: est.getName(),

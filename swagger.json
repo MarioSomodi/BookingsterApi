@@ -318,6 +318,13 @@
             "description": "Id of the reservation whose status to change",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "establishmentOIB",
+            "in": "query",
+            "description": "Establishment that belongs to the reservation so it's stat about how many times it was reserved can be updated",
+            "required": true,
+            "type": "string"
           }
         ],
         "produces": ["application/json"],

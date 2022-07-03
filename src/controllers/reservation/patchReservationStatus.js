@@ -8,10 +8,11 @@ export default function makePatchReservationStatus({
       'Content-Type': 'application/json',
     };
     try {
-      const { newStatus, reservationId } = httpRequest.query;
+      const { newStatus, reservationId, establishmentOIB } = httpRequest.query;
       const updatedReservation = await changeReservationStatus({
         newStatus,
         reservationId,
+        establishmentOIB,
       });
       return {
         headers,

@@ -77,6 +77,7 @@ const fetchUsersReservationsByStatus = makeFetchUsersReservationsByStatus({
 const changeReservationStatus = makeChangeReservationStatus({
   CRUDDb,
   usersReservationsCollection,
+  establishmentsCollection,
 });
 
 export {

@@ -385,6 +385,9 @@
         },
         "establishment": {
           "$ref": "#/definitions/EstablishmentGET"
+        },
+        "id": {
+          "type": "string"
         }
       }
     },

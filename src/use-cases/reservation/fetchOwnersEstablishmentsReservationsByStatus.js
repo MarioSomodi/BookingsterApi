@@ -21,12 +21,13 @@ export default function makeFetchOwnersEstablishmentsReservationsByStatus({
       reservations
         .filter((r) => r.status === Number(status))
         .map(async (reservationFB) => {
-          const establishment =
+          const establishments =
             await CRUDDb.getDocumentsFromCollectionByPropertyValue({
               collection: establishmentsCollection,
               propertyName: 'oib',
               propertyValue: reservationFB.establishmentOIB,
             });
+          const { 0: establishment } = establishments;
           reservationFB.establishment = establishment;
           const reservation = makeReservation(reservationFB, 'get');
           ownersEstablishmentsReservations.push({
@@ -40,6 +41,7 @@ export default function makeFetchOwnersEstablishmentsReservationsByStatus({
             reservedTo: reservation.getReservedTo(),
             status: reservation.getStatus(),
             tablesReserved: reservation.getTablesReserved(),
+            id: reservation.getId(),
           });
         })
     );

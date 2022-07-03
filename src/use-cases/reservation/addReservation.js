@@ -17,6 +17,7 @@ export default function makeAddReservation({
       places: reservation.getPlaces(),
       tablesReserved: reservation.getTablesReserved(),
       status: reservation.getStatus(),
+      id: reservation.getId(),
     };
   }
   return async function addReservation({ reservationInfo }) {

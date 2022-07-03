@@ -1,3 +1,4 @@
+import { uid } from 'uid';
 import isOibValid from '../../utils/oibValidator';
 import { checkIfValidDateSent } from '../../utils/validationExpressions';
 
@@ -14,6 +15,7 @@ export default function buildMakeReservation() {
       reservedTo = null,
       establishment = null,
       status = 0,
+      id,
     },
     action
   ) {
@@ -65,6 +67,7 @@ export default function buildMakeReservation() {
       getReservedTo: () => reservedTo,
       getEstablishment: () => establishment,
       getStatus: () => Number(status),
+      getId: () => (action === 'post' ? uid(20) : id),
     });
   };
 }

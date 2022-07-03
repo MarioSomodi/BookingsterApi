@@ -299,6 +299,43 @@
           }
         }
       }
+    },
+    "/api/reservation/status": {
+      "patch": {
+        "tags": ["Reservation"],
+        "summary": "Change the status of the reservation to a new status",
+        "parameters": [
+          {
+            "name": "newStatus",
+            "in": "query",
+            "description": "Status to change to",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "reservationId",
+            "in": "query",
+            "description": "Id of the reservation whose status to change",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns true if update was successful otherwise false",
+            "schema": {
+              "$ref": "#/definitions/SuccessMessage"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -310,6 +347,11 @@
             "$ref": "#/definitions/ReservationGET"
           }
         }
+      }
+    },
+    "SuccessMessage": {
+      "properties": {
+        "success": { "type": "boolean" }
       }
     },
     "ReservationPOST": {

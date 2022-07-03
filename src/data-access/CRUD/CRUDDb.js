@@ -6,12 +6,14 @@ export default function makeCRUDDb() {
     const doc = await dataRef.get();
     return doc.data();
   }
+
   async function insertIntoCollectionByAutoId({ collection, data } = {}) {
     const dataRef = collection.doc();
     await dataRef.set(data);
     const doc = await dataRef.get();
     return doc.data();
   }
+
   async function getAllFromCollection({ collection } = {}) {
     const snapshot = await collection.get();
     const docList = [];
@@ -20,6 +22,7 @@ export default function makeCRUDDb() {
     });
     return docList;
   }
+
   async function getDocumentFromCollectionById({ collection, id } = {}) {
     if (typeof id !== 'string') id = String(id);
     const documentRef = collection.doc(id);
@@ -54,6 +57,7 @@ export default function makeCRUDDb() {
     }
     return false;
   }
+
   async function checkIfDocumentWithPropertyValueExistsInCollection({
     collection,
     propertyName,
@@ -69,6 +73,20 @@ export default function makeCRUDDb() {
     return true;
   }
 
+  async function updateDocumentFromCollectionById({
+    collection,
+    updatedData,
+    id,
+  }) {
+    const documentRef = collection.doc(id);
+    await documentRef.update(updatedData);
+    const doc = await documentRef.get();
+    if (doc.exists) {
+      return true;
+    }
+    return false;
+  }
+
   return Object.freeze({
     checkIfDocumentWithPropertyValueExistsInCollection,
     checkIfDocWithIdExistsInCollection,
@@ -77,5 +95,6 @@ export default function makeCRUDDb() {
     getAllFromCollection,
     getDocumentsFromCollectionByPropertyValue,
     insertIntoCollectionByAutoId,
+    updateDocumentFromCollectionById,
   });
 }

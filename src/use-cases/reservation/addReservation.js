@@ -119,9 +119,10 @@ export default function makeAddReservation({
       reservationToInsert = formatReservation(reservation);
     }
     if (reservationToInsert !== null) {
-      await CRUDDb.insertIntoCollectionByAutoId({
+      await CRUDDb.insertIntoCollectionById({
         collection: usersReservationsCollection,
         data: reservationToInsert,
+        id: reservationToInsert.id,
       });
     }
     return {

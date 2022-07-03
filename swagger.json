@@ -9,8 +9,8 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host1": "bookingsterapi.oa.r.appspot.com",
-  "host": "localhost:8080",
+  "host": "bookingsterapi.oa.r.appspot.com",
+  "host1": "localhost:8080",
   "basePath": "/bookingster",
   "securityDefinitions": {
     "BearerAuth": {
@@ -225,9 +225,56 @@
           }
         }
       }
+    },
+    "/api/reservation/owner": {
+      "get": {
+        "tags": ["Reservation"],
+        "summary": "Get reservations for specific owners establishments by status",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Returns only reservations in the sent status",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "owner",
+            "in": "query",
+            "description": "Owners UID it will get only that owners reservations tied to his establishments",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns all reservations in specified status",
+            "schema": {
+              "$ref": "#/definitions/ReservationsList"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "ReservationsList": {
+      "properties": {
+        "reservations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReservationGET"
+          }
+        }
+      }
+    },
     "ReservationPOST": {
       "properties": {
         "establishmentOIB": {

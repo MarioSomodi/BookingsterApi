@@ -29,12 +29,12 @@ export default function buildMakeReservation() {
     if (!nameOnReservation || nameOnReservation.trim().length < 1) {
       throw new Error('Puno ime osobe koja rezervira mora biti poslano.');
     }
-    if (!checkIfValidDateSent(reservedFrom, false)) {
-      throw new Error(
-        'Datum i vrijeme početka rezervacije mora biti poslano i pravilno.'
-      );
-    }
     if (action === 'post') {
+      if (!checkIfValidDateSent(reservedFrom, false)) {
+        throw new Error(
+          'Datum i vrijeme početka rezervacije mora biti poslano i pravilno.'
+        );
+      }
       reservedFrom = new Date(
         Date.UTC(
           reservedFrom.year,
@@ -47,6 +47,9 @@ export default function buildMakeReservation() {
       if (reservedFrom < new Date()) {
         throw Error('Nije dozvoljeno dodati rezervaciju u prošlosti');
       }
+    } else {
+      reservedFrom = new Date(reservedFrom.seconds * 1000);
+      reservedTo = new Date(reservedTo.seconds * 1000);
     }
     if (places <= 0) {
       throw new Error('Najmanji broj mjesta koji se može rezervirati je 1.');

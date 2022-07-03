@@ -15,6 +15,7 @@ import {
 } from '../data-access';
 import makeFetchUserInfo from './user/fetchUserInfo';
 import makeAddReservation from './reservation/addReservation';
+import makeFetchOwnersEstablishmentsReservationsByStatus from './reservation/fetchOwnersEstablishmentsReservationsByStatus';
 
 const exportConfiguration = makeExportConfiguration({ configurationDb });
 
@@ -58,6 +59,13 @@ const addReservation = makeAddReservation({
   establishmentsCollection,
 });
 
+const fetchOwnersEstablishmentsReservationsByStatus =
+  makeFetchOwnersEstablishmentsReservationsByStatus({
+    CRUDDb,
+    establishmentsCollection,
+    usersReservationsCollection,
+  });
+
 export {
   addReservation,
   exportConfiguration,
@@ -66,4 +74,5 @@ export {
   fetchOwnersEstablishments,
   listEstablishment,
   createEstablishment,
+  fetchOwnersEstablishmentsReservationsByStatus,
 };

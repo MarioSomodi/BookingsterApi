@@ -262,6 +262,43 @@
           }
         }
       }
+    },
+    "/api/reservation/user": {
+      "get": {
+        "tags": ["Reservation"],
+        "summary": "Get reservations for specific users by status",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Returns only reservations in the sent status",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "name": "UID",
+            "in": "query",
+            "description": "UID it will get only that users reservations",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns all reservations in specified status",
+            "schema": {
+              "$ref": "#/definitions/ReservationsList"
+            }
+          },
+          "default": {
+            "description": "Unexpected error has happened",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -345,6 +382,9 @@
           "items": {
             "$ref": "#/definitions/TableGET"
           }
+        },
+        "establishment": {
+          "$ref": "#/definitions/EstablishmentGET"
         }
       }
     },

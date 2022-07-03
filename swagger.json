@@ -9,8 +9,8 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "bookingsterapi.oa.r.appspot.com",
-  "host1": "localhost:8080",
+  "host1": "bookingsterapi.oa.r.appspot.com",
+  "host": "localhost:8080",
   "basePath": "/bookingster",
   "securityDefinitions": {
     "BearerAuth": {

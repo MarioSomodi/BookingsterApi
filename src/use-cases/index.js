@@ -33,6 +33,7 @@ const listEstablishment = makeListEstablishments({
   establishmentsCollection,
   CRUDDb,
   establishmentsTablesCollection,
+  usersReservationsCollection,
 });
 
 const fetchOwnersEstablishments = makeFetchOwnersEstablishments({

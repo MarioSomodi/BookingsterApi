@@ -21,7 +21,7 @@ export default function buildMakeImage() {
     return Object.freeze({
       getName: () => name,
       getIsMain: () => isMain,
-      getPriority: () => priority,
+      getPriority: () => Number(priority),
       getBase64: () => base64,
     });
   };

@@ -9,8 +9,8 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host1": "bookingsterapi.oa.r.appspot.com",
-  "host": "localhost:8080",
+  "host": "bookingsterapi.oa.r.appspot.com",
+  "host1": "localhost:8080",
   "basePath": "/bookingster",
   "securityDefinitions": {
     "BearerAuth": {
@@ -231,7 +231,7 @@
     "ReservationPOST": {
       "properties": {
         "establishmentOIB": {
-          "type": "number"
+          "type": "string"
         },
         "establishmentOwner": {
           "type": "string"
@@ -270,7 +270,7 @@
     "ReservationGET": {
       "properties": {
         "establishmentOIB": {
-          "type": "number"
+          "type": "string"
         },
         "tablesReserved": {
           "type": "number"
@@ -389,7 +389,7 @@
           "type": "number"
         },
         "oib": {
-          "type": "number"
+          "type": "string"
         },
         "workingHours": {
           "type": "array",
@@ -430,7 +430,7 @@
           "type": "number"
         },
         "oib": {
-          "type": "number"
+          "type": "string"
         },
         "workingHours": {
           "type": "array",

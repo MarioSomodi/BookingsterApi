@@ -62,7 +62,7 @@ export default function buildMakeEstablishment({
           : workingHours.sort((a, b) => (a.index > b.index ? 1 : -1));
       },
       getTables: () => tables.getTables(),
-      getNumberOfReservations: () => numberOfReservations,
+      getNumberOfReservations: () => Number(numberOfReservations),
     });
   };
 }

@@ -16,7 +16,7 @@ export default function makeAddReservation({
       reservedTo: reservation.getReservedTo(),
       places: reservation.getPlaces(),
       tablesReserved: reservation.getTablesReserved(),
-      status: Number(reservation.getStatus()),
+      status: reservation.getStatus(),
     };
   }
   return async function addReservation({ reservationInfo }) {
@@ -32,34 +32,37 @@ export default function makeAddReservation({
       collection: establishmentsCollection,
       id: reservation.getEstablishmentOIB(),
     });
-
+    const dayOfReservation =
+      reservation.getReservedFrom().getUTCDay() === 0
+        ? 6
+        : reservation.getReservedFrom().getUTCDay() - 1;
     const workingHoursTheDayOfReservation = establishment.workingHours.filter(
-      // eslint-disable-next-line no-confusing-arrow
-      (wH) =>
-        (wH.index === reservation.getReservedFrom().getDay()) === 0
-          ? 6
-          : reservation.getReservedFrom().getDay() - 1
+      (wH) => wH.index === dayOfReservation
     )[0];
+
+    if (!workingHoursTheDayOfReservation) {
+      throw Error('Rezervacija nije moguća na neradni dan');
+    }
 
     const dateTo = new Date(
       Date.UTC(
-        reservation.getReservedFrom().getFullYear(),
-        reservation.getReservedFrom().getMonth(),
-        reservation.getReservedFrom().getDate(),
+        reservation.getReservedFrom().getUTCFullYear(),
+        reservation.getReservedFrom().getUTCMonth(),
+        reservation.getReservedFrom().getUTCDate(),
         Number(workingHoursTheDayOfReservation.timeTo.split(':')[0]),
         Number(workingHoursTheDayOfReservation.timeTo.split(':')[1])
       )
     );
+
     const establishmentStartsWorkingOnDateOfReservation = new Date(
       Date.UTC(
-        reservation.getReservedFrom().getFullYear(),
-        reservation.getReservedFrom().getMonth(),
-        reservation.getReservedFrom().getDate(),
+        reservation.getReservedFrom().getUTCFullYear(),
+        reservation.getReservedFrom().getUTCMonth(),
+        reservation.getReservedFrom().getUTCDate(),
         Number(workingHoursTheDayOfReservation.timeFrom.split(':')[0]),
         Number(workingHoursTheDayOfReservation.timeFrom.split(':')[1])
       )
     );
-
     if (
       reservation.getReservedFrom() > dateTo ||
       reservation.getReservedFrom() <

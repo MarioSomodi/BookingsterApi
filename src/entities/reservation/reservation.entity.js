@@ -56,12 +56,12 @@ export default function buildMakeReservation() {
       getEstablishmentOwner: () => establishmentOwner,
       getReservedBy: () => reservedBy,
       getReservedFrom: () => reservedFrom,
-      getPlaces: () => places,
+      getPlaces: () => Number(places),
       getTablesReserved: () => tablesReserved,
       getNameOnReservation: () => nameOnReservation,
       getReservedTo: () => reservedTo,
       getEstablishment: () => establishment,
-      getStatus: () => status,
+      getStatus: () => Number(status),
     });
   };
 }

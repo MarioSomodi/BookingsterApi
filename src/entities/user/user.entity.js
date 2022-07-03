@@ -45,7 +45,7 @@ export default function buildMakeUser() {
       getLastname: () => lastname,
       getAuthType: () => authType,
       getFullName: () => `${name} ${lastname}`,
-      getAccountType: () => accountType,
+      getAccountType: () => Number(accountType),
       getPhotoURL: () => photoURL,
       getEmail: () => email,
       getIsNewUser: () => true,

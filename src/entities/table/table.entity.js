@@ -14,7 +14,7 @@ export default function buildMakeTable() {
       throw Error('Stol mora imati mjesta za minimalno jednu osobu.');
     }
     return Object.freeze({
-      getCapacity: () => capacity,
+      getCapacity: () => Number(capacity),
       getDescription: () => description,
       getReserved: () =>
         userReservations.some(

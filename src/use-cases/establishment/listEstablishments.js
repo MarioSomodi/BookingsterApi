@@ -1,6 +1,6 @@
 import { makeEstablishment } from '../../entities';
 
-export default function makeListEstablishment({
+export default function makeListEstablishments({
   establishmentsCollection,
   CRUDDb,
   establishmentsTablesCollection,
